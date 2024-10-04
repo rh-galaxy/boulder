@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="common">
+      <UniqueIdentifier>{597b9ec3-642e-471d-9d59-e94e66635be5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\common\common.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\fileresource.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\fnt_comp\glconverter.cpp" />
+    <ClCompile Include="..\..\utils\fnt_comp\fnt_comp.cpp" />
+    <ClCompile Include="..\..\utils\fnt_comp\font.cpp" />
+    <ClCompile Include="..\..\utils\fnt_comp\glfont.cpp" />
+    <ClCompile Include="..\..\utils\fnt_comp\glgraph.cpp" />
+    <ClCompile Include="..\..\utils\fnt_comp\glimage.cpp" />
+    <ClCompile Include="..\..\utils\fnt_comp\gltarga.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\common\common.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\fileresource.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\utils\fnt_comp\glconverter.h" />
+    <ClInclude Include="..\..\utils\fnt_comp\font.h" />
+    <ClInclude Include="..\..\utils\fnt_comp\glfont.h" />
+    <ClInclude Include="..\..\utils\fnt_comp\glgraph.h" />
+    <ClInclude Include="..\..\utils\fnt_comp\glimage.h" />
+    <ClInclude Include="..\..\utils\fnt_comp\gltarga.h" />
+  </ItemGroup>
+</Project>

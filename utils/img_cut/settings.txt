@@ -1,0 +1,8 @@
+*INPUTBASENAME "explosion" //the beginning of the input files names
+*INPUTBASEINDEX "0000"  //the number of the first input image (in the name, the next has the number +1 (can be one to 5 chars)
+*INPUTFILETYPE ".tga"   //the file type and extension (valid are .tga .targa .jpeg .jpg)
+*INPUTSIZE 56 56        //gives the dimensions of the input images, all must have the same
+*INPUT_NUM_XY 8 2       //gives the number of input images in x(row) and y(column) as source. images are processed in row order (inpic1 = x0y0, inpic2 = x1y0 ... until the next row (x0y1))
+*OUTPUTBASENAME "all_explosion" //the beginning of the output files names (will be "pic[4digits_xpos]_[4digits_ypos].tga")
+*OUTPUTSIZE 448 112     //gives the wanted dimension of the output images
+*FLIPOUTXY  0           //tells the program to flip [X] and [Y] in the output names (to make sorting easier)

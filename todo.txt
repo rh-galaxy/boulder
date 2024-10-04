@@ -1,0 +1,91 @@
+
+
+This is a list of possible things to do, and things done.
+Also known limitations/errors are included.
+
+--------------------------------------------------------------------------------------
+
+TODO:
+
+More levels
+ * TODO
+
+Improvements
+ * Improvements to tileset
+ * Sound for amoeba enemy moving
+
+ * Make zoom possible (75%, 100%, 150%, 200%)?
+
+--------------------------------------------------------------------------------------
+
+Known limitations/errors:
+
+* Objects slipping and falling can overlap.
+
+--------------------------------------------------------------------------------------
+
+Some decisions:
+
+ * STL is used as much as possible.
+ * As little external dependencies as possible is a good thing.
+   Currently the game uses SDL2, STL
+ * The project shall compile without setting up anything.
+ * Indentation is 1 tab. Tabs are ONLY used before any text of a line,
+   spaces are used in other places.
+
+--------------------------------------------------------------------------------------
+
+Change log:
+
+ 20240220
+ * initial version on itch.io
+ * version 0.98h
+ 20240222
+ * add 7 missing sounds
+ * add level17.map
+ * version 0.99
+ 20240224
+ * fix sound not playing if other objects play sound with vol 0
+ * add level18.map
+ * add level19.map
+ * version 0.99
+ 20240224
+ * fix sound not playing when player is killed
+ * fix directories problems on mac
+ * change jumping enemy so it must be idle for taking a new step
+ * adjusted score to include one decimal
+ * cleanup of code
+ * add level20.map
+ * version 0.99
+ 20240229
+ * fix sound when completing level
+ * add level21.map
+ * add T,G,F,H in editor for those without PgUp,PgDown,Home,End
+ * add +,- on the normal keyboard in editor
+ * version 1.00
+ 20240301
+ * add level description to map-files in game and editor
+ * add level22.map
+ * fix alt+tab working in windows
+ * version 1.00
+ 20240302
+ * change sound for diamond eating enemy eating
+ * version 1.00
+ 20240302
+ * new title image
+ * fix enter name shift started level
+ * version 1.00
+ 20240323
+ * add level23.map
+ * fix editor tile selection if map cropped small
+ * version 1.00
+ 20240330
+ * add title music
+ * add music credits
+ * add selection marker on new score after play
+ * version 1.01
+ 20240405
+ * add utils directory to source
+ * version 1.01
+
+--------------------------------------------------------------------------------------

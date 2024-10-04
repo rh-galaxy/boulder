@@ -1,0 +1,1076 @@
+*SIZE 32
+
+//EMPTY
+*TILE 0x0001
+   *FILE    "tileset.tga"
+   *XY      0 0
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//WALL INDESTRUCTABLE
+*TILE 0x0002
+   *FILE    "tileset.tga"
+   *XY      32 0
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//EARTH
+*TILE 0x0003
+   *FILE    "tileset.tga"
+   *XY      64 0
+   *NFRAMES 16
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//DIAMOND RED
+*TILE 0x0004
+   *FILE    "tileset.tga"
+   *XY      0 64
+   *NFRAMES 7
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 10
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         2
+      *FRAMETIME     210
+      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    5        //MOVMENT DOWN DELAYED
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    10        //MOVMENT SLIP LEFT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  32  32  32  32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    11        //MOVMENT SLIP RIGHT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    15        //MOVMENT DOWN OUT OF MUD/MACHINE
+      *ORDER         1
+      *FRAMETIME     15
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -31 -31 -31 -30 -30 -29 -29 -28 -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10 -9  -8  -6  -4  -2
+     *ANIMNUMBER    20       //SHRINKING DIAMOND
+      *ORDER         1
+      *FRAMETIME     50
+      *FRAMESEQUENCE 2 3 4
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    24       //CRACK FROM NUT
+      *ORDER         1
+      *FRAMETIME     75
+      *FRAMESEQUENCE 5 6
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    16        //MOVMENT DOWN INTO DIAMONDMAKER OR LAVA
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   10  12  14  16  18  20  22  24  26  28   30
+     *ANIMNUMBER    17        //MOVMENT DOWN OUT OF DIAMONDMAKER
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+//DIAMOND BLUE
+*TILE 0x0005
+   *FILE    "tileset.tga"
+   *XY      0 96
+   *NFRAMES 8
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 10
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         2
+      *FRAMETIME     210
+      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    5        //MOVMENT DOWN DELAYED
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    10        //MOVMENT SLIP LEFT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  32  32  32  32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    11        //MOVMENT SLIP RIGHT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    15        //MOVMENT DOWN OUT OF MUD/MACHINE
+      *ORDER         1
+      *FRAMETIME     15
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -31 -31 -31 -30 -30 -29 -29 -28 -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10 -9  -8  -6  -4  -2
+     *ANIMNUMBER    20       //SHRINKING DIAMOND
+      *ORDER         1
+      *FRAMETIME     60
+      *FRAMESEQUENCE 2 3 4
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    23       //SQUEESE DIAMOND
+      *ORDER         1
+      *FRAMETIME     60
+      *FRAMESEQUENCE 5 6 7
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    16        //MOVMENT DOWN INTO DIAMONDMAKER OR LAVA
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   10  12  14  16  18  20  22  24  26  28   30
+     *ANIMNUMBER    17        //MOVMENT DOWN OUT OF DIAMONDMAKER
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+//STONE
+*TILE 0x0006
+   *FILE    "tileset.tga"
+   *XY      0 128
+   *NFRAMES 7
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 11
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     240
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    6        //MOVMENT PUSH LEFT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 0   0   0   1   1   1   1   1   2   2   2   2   3   3   3   3
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    7        //MOVMENT PUSH RIGHT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 0   0   0   4   4   4   4   4   5   5   5   5   6   6   6   6
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    5        //MOVMENT DOWN DELAYED
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    10        //MOVMENT SLIP LEFT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   1   1   1   1   1   2   2   2   2   3   3   3   3
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  32  32  32  32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    11        //MOVMENT SLIP RIGHT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   4   4   4   4   4   5   5   5   5   6   6   6   6
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    14        //MOVMENT DOWN INTO MUD
+      *ORDER         1
+      *FRAMETIME     15
+      *FRAMESEQUENCE 0   0   0   0   0   1   1   1   0   0   0   0   4   4   4   0   0   0   0   1   1   1   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   9   10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  28  29  29  30  30  31  31
+     *ANIMNUMBER    15        //MOVMENT DOWN OUT OF MUD/MACHINE
+      *ORDER         1
+      *FRAMETIME     15
+      *FRAMESEQUENCE 0   0   0   0   0   1   1   1   0   0   0   0   4   4   4   0   0   0   0   1   1   1   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -31 -31 -31 -30 -30 -29 -29 -28 -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10 -9  -8  -6  -4  -2
+     *ANIMNUMBER    16        //MOVMENT DOWN INTO DIAMONDMAKER OR LAVA
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   10  12  14  16  18  20  22  24  26  28   30
+     *ANIMNUMBER    17        //MOVMENT DOWN OUT OF DIAMONDMAKER
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+
+//WALL DESTRUCTABLE
+*TILE 0x0007
+   *FILE    "tileset.tga"
+   *XY      256 32
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//WALL DESTRUCTABLE (SLIP)
+*TILE 0x0008
+   *FILE    "tileset.tga"
+   *XY      288 32
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//NUT
+*TILE 0x0009
+   *FILE    "tileset.tga"
+   *XY      0 256
+   *NFRAMES 5
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 8
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     240
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    6        //MOVMENT PUSH LEFT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 0   0   1   2   2   1   0   0   0   1   2   2   1   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    7        //MOVMENT PUSH RIGHT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 0   0   3   4   4   3   0   0   0   3   4   4   3   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    5        //MOVMENT DOWN DELAYED
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    10        //MOVMENT SLIP LEFT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   1   1   2   2   2   1   1   1   1   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  32  32  32  32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    11        //MOVMENT SLIP RIGHT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   3   3   4   4   4   3   3   3   3   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    16        //MOVMENT DOWN INTO LAVA
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   10  12  14  16  18  20  22  24  26  28   30
+
+//BOMB
+*TILE 0x000A
+   *FILE    "tileset.tga"
+   *XY      224 128
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 9
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    6        //MOVMENT PUSH LEFT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    7        //MOVMENT PUSH RIGHT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    5        //MOVMENT DOWN DELAYED
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    10        //MOVMENT SLIP LEFT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  32  32  32  32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    11        //MOVMENT SLIP RIGHT
+      *ORDER         1
+      *FRAMETIME     16
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -32 -32 -32 -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -32 -30 -27 -24 -20 -16 -11 -6  -4  -2
+     *ANIMNUMBER    15        //MOVMENT DOWN OUT OF MUD/MACHINE
+      *ORDER         1
+      *FRAMETIME     15
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -31 -31 -31 -30 -30 -29 -29 -28 -28 -27 -26 -25 -24 -23 -22 -21 -20 -19 -18 -17 -16 -15 -14 -13 -12 -11 -10 -9  -8  -6  -4  -2
+     *ANIMNUMBER    16        //MOVMENT DOWN INTO LAVA
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   10  12  14  16  18  20  22  24  26  28   30
+
+//KEYS
+*TILE 0x000B
+   *FILE    "tileset.tga"
+   *XY      0 288
+   *NFRAMES 8
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 8
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    2        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 2
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    3        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 3
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    20       //SHRINKING KEY
+      *ORDER         1
+      *FRAMETIME     80
+      *FRAMESEQUENCE 4
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    21       //SHRINKING KEY
+      *ORDER         1
+      *FRAMETIME     80
+      *FRAMESEQUENCE 5
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    22       //SHRINKING KEY
+      *ORDER         1
+      *FRAMETIME     80
+      *FRAMESEQUENCE 6
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    23       //SHRINKING KEY
+      *ORDER         1
+      *FRAMETIME     80
+      *FRAMESEQUENCE 7
+      *USEFRAMEOFFSET 0
+
+//DOORS
+*TILE 0x000C
+   *FILE    "tileset.tga"
+   *XY      0 320
+   *NFRAMES 4
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//GREY DOOR
+*TILE 0x000D
+   *FILE    "tileset.tga"
+   *XY      128 320
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//MUD
+*TILE 0x000E
+   *FILE    "tileset.tga"
+   *XY      224 64
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 2
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //DELAY ANIM
+      *ORDER         1
+      *FRAMETIME     550
+      *FRAMESEQUENCE 0 
+      *USEFRAMEOFFSET 0
+
+//MACHINE
+*TILE 0x00D0
+   *FILE    "tileset.tga"
+   *XY      0 672
+   *NFRAMES 4
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 2
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     25
+      *FRAMESEQUENCE 0 1 2 3
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //DELAY ANIM
+      *ORDER         1
+      *FRAMETIME     500
+      *FRAMESEQUENCE 3 2 1 0 
+      *USEFRAMEOFFSET 0
+
+//STONE->DIAMONDMAKER
+*TILE 0x000F
+   *FILE    "tileset.tga"
+   *XY      128 160
+   *NFRAMES 8
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 2
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     100
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //STARTED
+      *ORDER         1
+      *FRAMETIME     70
+      *FRAMESEQUENCE 0 1 2 3 4 5 6 7
+      *USEFRAMEOFFSET 0
+
+//WALL INDESTRUCTABLE (GREEN_LEFT)
+*TILE 0x0010
+   *FILE    "tileset.tga"
+   *XY      256 128
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//WALL INDESTRUCTABLE (GREEN_RIGHT)
+*TILE 0x0011
+   *FILE    "tileset.tga"
+   *XY      288 128
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//WALL INDESTRUCTABLE (GREEN_LEFT_SLIP)
+*TILE 0x0012
+   *FILE    "tileset.tga"
+   *XY      256 64
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//WALL INDESTRUCTABLE (GREEN_RIGHT_SLIP)
+*TILE 0x0013
+   *FILE    "tileset.tga"
+   *XY      288 64
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//WALL INDESTRUCTABLE (GREEN_BOTTOM)
+*TILE 0x0014
+   *FILE    "tileset.tga"
+   *XY      288 96
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//LAVA
+*TILE 0x0015
+   *FILE    "tileset.tga"
+   *XY      256 96
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+//LAVA_SPLASH
+*TILE 0x0016
+   *FILE    "tileset.tga"
+   *XY      64 192
+   *NFRAMES 6
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 2
+     *ANIMNUMBER    0        //LEFT SPLASH
+      *ORDER         1
+      *FRAMETIME     40
+      *FRAMESEQUENCE 0 1 2
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //RIGHT SPLASH
+      *ORDER         1
+      *FRAMETIME     40
+      *FRAMESEQUENCE 3 4 5 
+      *USEFRAMEOFFSET 0
+
+//MINE
+*TILE 0x0020
+   *FILE    "tileset.tga"
+   *XY      160 256
+   *NFRAMES 5
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 3
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         2
+      *FRAMETIME     160
+      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    22       //SHRINKING MINE (TAKE)
+      *ORDER         1
+      *FRAMETIME     50
+      *FRAMESEQUENCE 2 3 4
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    25       //ARMED TO EXPLODE
+      *ORDER         1
+      *FRAMETIME     25
+      *FRAMESEQUENCE 4 3 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+      *USEFRAMEOFFSET 0
+
+//PLAYER
+*TILE 0x00A0
+   *FILE    "tileset.tga"
+   *XY      0 352
+   *NFRAMES 26
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 12
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     240
+      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 2   2   2   3   3   3   2   2   4   4   5   5   5   4   4   4
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    2        //MOVMENT LEFT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 6   6   6   7   7   7   6   6   8   8   9   9   9   8   8   8
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    3        //MOVMENT RIGHT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 10  10  10  11  11  11  10  10  12  12  13  13  13  12  12  12
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    4        //MOVMENT UP
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 14  14  14  15  15  15  14  14  16  16  17  17  17  16  16  16
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 32 30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+     *ANIMNUMBER    6        //MOVMENT PUSH LEFT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 18  18  18  19  19  19  18  18  20  20  21  21  21  20  20  20
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    7        //MOVMENT PUSH RIGHT
+      *ORDER         1
+      *FRAMETIME     20
+      *FRAMESEQUENCE 22  22  22  23  23  23  22  22  24  24  25  25  25  24  24  24
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    41        //MOVEMENT 2XDOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 2   2   2   3   3   2   2   0   4   4   5   5   4   4   4   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -64 -60 -56 -52 -48 -44 -40 -36 -32 -28 -24 -20 -16 -12 -8  -4
+     *ANIMNUMBER    42        //MOVEMENT 2XLEFT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 6   6   6   7   7   7   6   6   8   8   9   9   9   8   8   8
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 64  60  56  52  48  44  40  36  32  28  24  20  16  12  8   4
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    43        //MOVEMENT 2XRIGHT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 10  10  10  11  11  11  10  10  12  12  13  13  13  12  12  12
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -64 -60 -56 -52 -48 -44 -40 -36 -32 -28 -24 -20 -16 -12 -8  -4
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    44        //MOVEMENT 2XUP
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 14  14  14  15  15  15  14  14  16  16  17  17  17  16  16  16
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 64  60  56  52  48  44  40  36  32  28  24  20  16  12  8   4
+     *ANIMNUMBER    16        //MOVMENT DOWN INTO LAVA
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1  CLIPINCLUSIVE
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 0   2   4   6   8   10  12  14  16  18  20  22  24  26  28  30
+
+//EXIT CLOSED
+*TILE 0x00A1
+   *FILE    "tileset.tga"
+   *XY      0 160
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 0
+
+//EXIT OPEN
+*TILE 0x00A2
+   *FILE    "tileset.tga"
+   *XY      32 160
+   *NFRAMES 3
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 1
+     *ANIMNUMBER    0        //TEAM0
+      *ORDER         1
+      *FRAMETIME     150
+      *FRAMESEQUENCE 0 1 2 1
+      *USEFRAMEOFFSET 0
+
+//EXPLOSION
+*TILE 0x00B0
+   *FILE    "tileset.tga"
+   *XY      256 192
+   *NFRAMES 12
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 3
+     *ANIMNUMBER    30        //FIRE EXPLOSION
+      *ORDER         1
+      *FRAMETIME     40
+      *FRAMESEQUENCE 2 3 4 5 6 7 8 9 10 11
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    31        //SNAP EXPLOSION
+      *ORDER         1
+      *FRAMETIME     25
+      *FRAMESEQUENCE 0 0 1 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    32        //SHORT EXPLOSION
+      *ORDER         1
+      *FRAMETIME     35
+      *FRAMESEQUENCE 3 4 4 5 5 6 6 7
+      *USEFRAMEOFFSET 0
+
+//ENEMY AMOEBA
+*TILE 0x00C0
+   *FILE    "tileset.tga"
+   *XY      0 448
+   *NFRAMES 3
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 9
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     48
+      *FRAMESEQUENCE 0 1 2 1 0 1 2 1 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   1   1   1   2   2   2   1   1   1   2   2   2   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    2        //MOVMENT LEFT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   1   1   1   2   2   2   1   1   1   2   2   2   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    3        //MOVMENT RIGHT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   1   1   1   2   2   2   1   1   1   2   2   2   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    4        //MOVMENT UP
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   1   1   1   2   2   2   1   1   1   2   2   2   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+     *ANIMNUMBER    45        //NEXT TURN DOWN
+      *ORDER         1
+      *FRAMETIME     48
+      *FRAMESEQUENCE 0 1 2 1 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    46        //NEXT TURN LEFT
+      *ORDER         1
+      *FRAMETIME     48
+      *FRAMESEQUENCE 0 1 2 1 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    47        //NEXT TURN RIGHT
+      *ORDER         1
+      *FRAMETIME     48
+      *FRAMESEQUENCE 0 1 2 1 0 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    48        //NEXT TURN UP
+      *ORDER         1
+      *FRAMETIME     48
+      *FRAMESEQUENCE 0 1 2 1 0 1
+      *USEFRAMEOFFSET 0
+
+//ENEMY BLUE TURNING
+*TILE 0x00C1
+   *FILE    "tileset.tga"
+   *XY      0 480
+   *NFRAMES 24
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 13
+     *ANIMNUMBER    0        //IDLE/DEFAULT (never used)
+      *ORDER         1
+      *FRAMETIME     56
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 7   7   8   8   7   7   6   6   7   7   8   8   7   7   6   6
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    2        //MOVMENT LEFT
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 13  13  14  14  13  13  12  12  13  13  14  14  13  13  12  12
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    3        //MOVMENT RIGHT
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 1   1   2   2   1   1   0   0   1   1   2   2   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    4        //MOVMENT UP
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 19  19  20  20  19  19  18  18  19  19  20  20  19  19  18  18
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+     *ANIMNUMBER    45        //TURN DOWN FROM RIGHT (ANIM_TURN_DOWN_CW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 0   0   3   3   3   3   4   4   4   4   5   5   5   5   6   6
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    46        //TURN LEFT FROM DOWN (ANIM_TURN_LEFT_CW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 6   6   9   9   9   9   10  10  10  10  11  11  11  11  12  12
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    47        //TURN RIGHT FROM UP (ANIM_TURN_RIGHT_CW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 18   18  21  21  21  21  22  22  22  22  23  23  23  23  0   0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    48        //TURN UP FROM LEFT (ANIM_TURN_UP_CW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 12   12  15  15  15  15  16  16  16  16  17  17  17  17  18  18
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    49        //TURN DOWN FROM LEFT (ANIM_TURN_DOWN_CCW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 12   12  11  11  11  11  10  10  10  10  9   9   9   9   6   6
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    50        //TURN LEFT FROM UP (ANIM_TURN_LEFT_CCW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 18   18  17  17  17  17  16  16  16  16  15  15  15  15  12  12
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    51        //TURN RIGHT FROM DOWN (ANIM_TURN_RIGHT_CCW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 6   6   5   5   5   5   4   4   4   4   3   3   3   3   0   0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    52        //TURN UP FROM RIGHT (ANIM_TURN_UP_CCW)
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 0   0   23  23  23  23  22  22  22  22  21  21  21  21  18  18
+      *USEFRAMEOFFSET 0
+
+//ENEMY ROBOT TURNING
+*TILE 0x00C2
+   *FILE    "tileset.tga"
+   *XY      128 544
+   *NFRAMES 16
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 13
+     *ANIMNUMBER    0        //IDLE/DEFAULT (never used)
+      *ORDER         1
+      *FRAMETIME     56
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    2        //MOVMENT LEFT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 8   8   8   8   8   8   8   8   8   8   8   8   8   8   8   8
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    3        //MOVMENT RIGHT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    4        //MOVMENT UP
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 12  12  12  12  12  12  12  12  12  12  12  12  12  12  12  12
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+     *ANIMNUMBER    45        //TURN DOWN FROM RIGHT (ANIM_TURN_DOWN_CW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   1   1   1   1   2   2   2   2   3   3   3   3   4   4
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    46        //TURN LEFT FROM DOWN (ANIM_TURN_LEFT_CW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 4   4   5   5   5   5   6   6   6   6   7   7   7   7   8   8
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    47        //TURN RIGHT FROM UP (ANIM_TURN_RIGHT_CW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 12  12  13  13  13  13  14  14  14  14  15  15  15  15  0   0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    48        //TURN UP FROM LEFT (ANIM_TURN_UP_CW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 8   8   9   9   9   9  10  10  10  10  11  11  11  11  12  12
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    49        //TURN DOWN FROM LEFT (ANIM_TURN_DOWN_CCW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 8   8   7   7   7   7   6   6   6   6   5   5   5   5   4   4
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    50        //TURN LEFT FROM UP (ANIM_TURN_LEFT_CCW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 12  12  11  11  11  11  10  10  10  10   9   9   9   9   8   8
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    51        //TURN RIGHT FROM DOWN (ANIM_TURN_RIGHT_CCW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 4   4   3   3   3   3   2   2   2   2   1   1   1   1   0   0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    52        //TURN UP FROM RIGHT (ANIM_TURN_UP_CCW)
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   0   15  15  15  15  14  14  14  14  13  13  13  13  12  12
+      *USEFRAMEOFFSET 0
+
+//ENEMY EATING
+*TILE 0x00C3
+   *FILE    "tileset.tga"
+   *XY      96 448
+   *NFRAMES 4
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 5
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     24
+      *FRAMESEQUENCE 0 1 2 3 3 2 1 0 0 0 1 2 3 3 3 2 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 0   1   1   2   2   3   3   3   3   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+     *ANIMNUMBER    2        //MOVMENT LEFT
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 0   1   1   2   2   3   3   3   3   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    3        //MOVMENT RIGHT
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 0   1   1   2   2   3   3   3   3   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -30 -28 -26 -24 -22 -20 -18 -16 -14 -12 -10 -8  -6  -4  -2
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    4        //MOVMENT UP
+      *ORDER         1
+      *FRAMETIME     14
+      *FRAMESEQUENCE 0   1   1   2   2   3   3   3   3   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 32  30  28  26  24  22  20  18  16  14  12  10  8   6   4   2
+
+//ENEMY JUMPING
+*TILE 0x00C4
+   *FILE    "tileset.tga"
+   *XY      0 640
+   *NFRAMES 3
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 5
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     36
+      *FRAMESEQUENCE 0 0 1 1 0 0 0 0 0 1 1 1 0 0 0 0 1 1 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //MOVMENT DOWN
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   1   1   2   2   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y -32 -28 -24 -21 -18 -15 -12 -9  -7  -3  -2  -1
+     *ANIMNUMBER    2        //MOVMENT LEFT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   1   1   2   2   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 32  28  24  21  18  15  12  9   7   3   2   1
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    3        //MOVMENT RIGHT
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   1   1   2   2   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X -32 -28 -24 -21 -18 -15 -12 -9  -7  -3  -2  -1
+      *FRAMEOFFSET_Y 0   0   0   0   0   0   0   0   0   0   0   0
+     *ANIMNUMBER    4        //MOVMENT UP
+      *ORDER         1
+      *FRAMETIME     12
+      *FRAMESEQUENCE 0   1   1   2   2   2   2   1   1   1   0   0
+      *USEFRAMEOFFSET 1
+      *FRAMEOFFSET_X 0   0   0   0   0   0   0   0   0   0   0   0
+      *FRAMEOFFSET_Y 32  28  24  21  18  15  12  9   7   3   2   1
+	  
+//ENEMY SLIME
+*TILE 0x00C8
+   *FILE    "tileset.tga"
+   *XY      0 608
+   *NFRAMES 7
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 5
+     *ANIMNUMBER    0        //IDLE/DEFAULT0
+      *ORDER         1
+      *FRAMETIME     280
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    1        //IDLE/DEFAULT1
+      *ORDER         1
+      *FRAMETIME     280
+      *FRAMESEQUENCE 1
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    2        //IDLE/DEFAULT2
+      *ORDER         1
+      *FRAMETIME     280
+      *FRAMESEQUENCE 2
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    3        //IDLE/DEFAULT3
+      *ORDER         1
+      *FRAMETIME     280
+      *FRAMESEQUENCE 3
+      *USEFRAMEOFFSET 0
+     *ANIMNUMBER    20        //GROW
+      *ORDER         1
+      *FRAMETIME     50
+      *FRAMESEQUENCE 4 5 6
+      *USEFRAMEOFFSET 0
+
+//OBJ_NEXT_EXPLODE_INTO (NEVER VISIBLE, DO NOT USE IN EDITOR)
+*TILE 0x00FF
+   *FILE    "tileset.tga"
+   *XY      0 0
+   *NFRAMES 1
+   *TRANSP  0 0 0 0
+   *ANIMATIONS 1
+     *ANIMNUMBER    0        //IDLE/DEFAULT
+      *ORDER         1
+      *FRAMETIME     50
+      *FRAMESEQUENCE 0
+      *USEFRAMEOFFSET 0

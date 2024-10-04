@@ -1,0 +1,67 @@
+
+Setup for building and running the game in a VirtualBox machine
+
+
+1. Download VirtualBox
+
+https://www.virtualbox.org/wiki/Downloads
+
+
+2. Get an ubuntu iso image
+
+http://www.ubuntu.com/download/desktop
+
+x64 22.04 LTS is recommended
+
+
+3. Create a virtual box machine
+
+Click New
+Name the machine, and select matching type and version
+30GB virtual harddisk should be enough
+
+Settings->Display->video    Set 128 MB video memory
+Settings->Display->video    Uncheck "Enable 3D Acceleration" if checked
+Settings->General->Advanced Set desired Shared Clipboard
+
+Settings->Shared folders    Add any host folders you want to "Machine Folders"
+
+Click Start
+
+Mount the image from 2
+Devices->CD/DVD Devices->Choose...
+
+Install Linux
+
+4. Install the guest additions
+
+Open a terminal
+> sudo apt-get update
+> sudo apt-get upgrade
+> sudo apt-get install build-essential module-assistant
+> sudo m-a prepare
+VirtualBox Menu->Devices->Insert Guest Additions CD image
+Follow the autostart
+To access shared folders from 3 do
+> sudo adduser YOUR_USERNAME vboxsf
+
+restart
+
+5. Install the required libs to build
+
+Open a terminal
+> sudo apt-get install subversion
+> (sudo apt-get install libglu1-mesa-dev mesa-common-dev)  (for fnt_comp utility)
+> (sudo apt-get install libsdl2-2.0-0)
+> (sudo apt-get install libsdl2-dev)
+
+6. Check out and build
+
+In the terminal stand in the folder you want to checkout to
+> unzip boulder_1.01_src.zip
+> cd boulder2/build/linux
+> make all
+> cd ../../exe/linux_<os_type> (Replace <os_type> with your installed linux type, either x86 or x64)
+> ./boulder2
+
+You should get around 50 FPS

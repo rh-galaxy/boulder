@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="graph">
+      <UniqueIdentifier>{c49c2576-4bef-47e6-92b4-66b467839a5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{ab787dfa-3f76-45fa-8709-a140a448fab2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\graph\bmp.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\converter.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\font.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\graph.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\image.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\imagediskop.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\jpeg.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graph\targa.cpp">
+      <Filter>graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\common.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\common\fileresource.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\utils\img_cut\img_cut.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\graph\bmp.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\converter.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\font.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\graph.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\image.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\imagediskop.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\jpeg.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\jpeg_include.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\graph\targa.h">
+      <Filter>graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\common.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\common\fileresource.h">
+      <Filter>common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,6 @@
+
+*EDIT 1
+ *RECT 0 0 142 36
+ *TEXT "Level description"
+ *MAXTEXT 31
+ *STATE 1
