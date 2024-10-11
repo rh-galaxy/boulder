@@ -2,8 +2,8 @@
 
 https://rh-galaxy.itch.io/boulder
 
-////////////////////////////////
-##### Windows
+---
+#### Windows
 
 Software:
 1. Install Visual Studio
@@ -24,8 +24,8 @@ Running:
 
 
 
-////////////////////////////////
-##### Linux
+---
+#### Linux
 
 Software:
 1. If the build fails, this might help
@@ -43,8 +43,8 @@ Running:
 
 
 
-////////////////////////////////
-##### Mac
+---
+#### Mac
 
 Only on Intelx64 or Arm64
 
@@ -65,8 +65,8 @@ Running:
 
 
 
-////////////////////////////////
-##### Files
+---
+#### Files
 
 * build
     - linux
