@@ -70,13 +70,13 @@ Running:
 
 * build
     - linux
-        - Makefile to build on linux
-        - virtualbox.txt which describes how to setup, build and run on a virtual machine (running linux)
+        - Makefile - to build on linux
+        - virtualbox.txt - describes how to setup, build and run on a virtual machine (running linux)
     - mac
-        - XCode 15 project files to build and run on mac
+        - XCode 15 project files - to build and run on mac
     - windows       
-        - VS project files, to build and run on windows
-        - build_release_files.bat, which builds the release zip packages
+        - VS project files - to build and run on windows
+        - build_release_files.bat - to build the release zip packages
 
 * exe
     - executable files for windows, linux and mac
