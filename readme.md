@@ -39,7 +39,7 @@ Building:
 Running:
 1. Enter the package dir ./exe/linux_x64
 2. Run ./boulder
-(3. Run ./mapeditor fileandpath.map)
+3. (Run ./mapeditor fileandpath.map)
 
 
 
