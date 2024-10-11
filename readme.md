@@ -69,36 +69,36 @@ Running:
 Files
 
 *build
-  -linux
-    -Makefile to build on linux
-    -virtualbox.txt which describes how to setup, build and run on a virtual machine (running linux)
-  -mac
-    -XCode 15 project files to build and run on mac
-  -windows       
-    -VS project files, to build and run on windows
-    -build_release_files.bat, which builds the release zip packages
+    -linux
+        -Makefile to build on linux
+        -virtualbox.txt which describes how to setup, build and run on a virtual machine (running linux)
+    -mac
+        -XCode 15 project files to build and run on mac
+    -windows       
+        -VS project files, to build and run on windows
+        -build_release_files.bat, which builds the release zip packages
 
 *exe
-  -executable files for windows, linux and mac
-  -data folder is common for all versions
+    -executable files for windows, linux and mac
+    -data folder is common for all versions
 
 *ext_include
-  -external includes, with the exception of mac/fs*.* files
+    -external includes, with the exception of mac/fs*.* files
 
 *lib
-  -external libs for windows, linux and mac
+    -external libs for windows, linux and mac
 
 *original_gfx
-  -source files for gfx
+    -source files for gfx
 
 *utils
-  -fnt_comp - font compiler project source files (uses opengl and builds on windows and linux)
-  -img_cut - image cutter project source files
-  -res_comp - resource compiler project source files
-  -zip_exec - zip executable flag fix project source files
+    -fnt_comp - font compiler project source files (uses opengl and builds on windows and linux)
+    -img_cut - image cutter project source files
+    -res_comp - resource compiler project source files
+    -zip_exec - zip executable flag fix project source files
 
 *src
-  -common - common source files for all projects, also includes gui.cpp/h and tileset.cpp/h which are used in both game and editor and depends on other code
-  -graph - common source files for handling graphics
-  -editor - editor project source files
-  -boulder - game project source files
+    -common - common source files for all projects, also includes gui.cpp/h and tileset.cpp/h which are used in both game and editor and depends on other code
+    -graph - common source files for handling graphics
+    -editor - editor project source files
+    -boulder - game project source files
