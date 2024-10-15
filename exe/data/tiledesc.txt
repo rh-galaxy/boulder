@@ -31,7 +31,7 @@
      *ANIMNUMBER    0        //IDLE/DEFAULT
       *ORDER         2
       *FRAMETIME     210
-      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
       *USEFRAMEOFFSET 0
      *ANIMNUMBER    1        //MOVMENT DOWN
       *ORDER         1
@@ -102,7 +102,7 @@
      *ANIMNUMBER    0        //IDLE/DEFAULT
       *ORDER         2
       *FRAMETIME     210
-      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+      *FRAMESEQUENCE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
       *USEFRAMEOFFSET 0
      *ANIMNUMBER    1        //MOVMENT DOWN
       *ORDER         1

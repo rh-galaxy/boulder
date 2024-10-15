@@ -109,8 +109,8 @@ C_GUI::C_GUI()
 		s_pFont = new C_Font(_RGBA8888);
 		sprintf(szFile, "%s/%s", C_Global::szDataPath, "arial-16");
 		s_pFont->Load(szFile, NULL);
-		s_iObjCount++;
 	}
+	s_iObjCount++;
 
 	m_pObj = new C_GUIObjects();
 	m_pTimer = new C_Timer();
