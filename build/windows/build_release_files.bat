@@ -37,6 +37,7 @@ REM ---------------------------------------------------------------------------
 REM source
 
 REM /
+xcopy ..\..\*.md "%path_source%\"
 xcopy ..\..\*.txt "%path_source%\"
 xcopy ..\..\*.jpg "%path_source%\"
 REM /src
