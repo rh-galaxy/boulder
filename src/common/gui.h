@@ -182,6 +182,8 @@ private:
 
 	bool m_bLastMouseLeft;
 	int m_iLastMouseX, m_iLastMouseY;
+
+	bool m_bFirstRepeat;
 };
 
 #endif

@@ -120,6 +120,8 @@ C_GUI::C_GUI()
 	m_bLastMouseLeft = false;
 	m_iLastMouseX = 0;
 	m_iLastMouseY = 0;
+
+	m_bFirstRepeat = true;
 }
 
 C_GUI::~C_GUI()
@@ -392,7 +394,8 @@ void C_GUI::UpdateInput()
 	if (iCurWheelEvent == EVT_MOUSE_WHEEL_DOWN) MouseWheel(1);
 
 	int iDpadMod = 0;
-	if(m_dKeyTimer>85) {
+	if(m_dKeyTimer>115 || m_bFirstRepeat) {
+		bool bModDone = false;
 		m_dKeyTimer = 0;
 
 		//check all list objects for buttons pressed
@@ -401,8 +404,14 @@ void C_GUI::UpdateInput()
 			S_GUIObject *pstO = &(*m_pObj)[i];
 
 			if(pstO->iType == TYPE_LIST && pstO->bListHasSelection) {
-				if(pstO->iListVBarStatus & 0x08) ListModSelection(-1, pstO->iID);
-				if(pstO->iListVBarStatus & 0x10) ListModSelection(1, pstO->iID);
+				if (pstO->iListVBarStatus & 0x08) {
+					bModDone = true;
+					ListModSelection(-1, pstO->iID);
+				}
+				if (pstO->iListVBarStatus & 0x10) {
+					bModDone = true;
+					ListModSelection(1, pstO->iID);
+				}
 			}
 		}
 
@@ -411,6 +420,8 @@ void C_GUI::UpdateInput()
 		m_pInput->GetGamepadState(&stPad);
 		iDpadMod = (stPad.iDpad & 0x001) ? 1 : 0;
 		iDpadMod = (stPad.iDpad & 0x002) ? -1 : iDpadMod;
+
+		m_bFirstRepeat = (iDpadMod==0 && !bModDone); //still first repeat if nothing pressed
 	}
 
 	if((m_pInput->IsPressedRepeat(DIK_UP) && !m_pInput->IsPressed(DIK_DOWN)) || iDpadMod==1) {
