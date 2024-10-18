@@ -87,5 +87,10 @@ Change log:
  20240405
  * add utils directory to source
  * version 1.01
+ 20241018
+ * fix repeat up/down in menu list
+ * fix gamepad working on windows 11?
+ * add level24.map
+ * version 1.01
 
 --------------------------------------------------------------------------------------

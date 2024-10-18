@@ -34,6 +34,8 @@ C_Control::C_Control()
 	m_dStepX = 0, m_dStepY = 0;
 
 	m_hController = NULL;
+	
+	SDL_SetHint(SDL_HINT_JOYSTICK_THREAD, "1"); //apparently needed in windows 11
 	SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
 	int nJoysticks = SDL_NumJoysticks();
 	for (int i = 0; i < nJoysticks; i++) {
