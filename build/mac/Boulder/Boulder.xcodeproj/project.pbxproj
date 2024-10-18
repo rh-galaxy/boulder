@@ -279,6 +279,7 @@
 		38788AA02B922F240017E291 /* gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
 		38C87A9F2BB89B2100C565FA /* credits.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = credits.tga; sourceTree = "<group>"; };
 		38C87AA02BB89B2100C565FA /* title.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = title.ogg; sourceTree = "<group>"; };
+		38DA2F382CC2EDA100EAAFB8 /* level24.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = level24.map; sourceTree = "<group>"; };
 		38FC5BBD29D828C100F614B6 /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../lib/mac/libSDL2.a; sourceTree = "<group>"; };
 		38FC5BDB29D82DC100F614B6 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		38FC5BDD29D82DCF00F614B6 /* CoreHaptics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreHaptics.framework; path = System/Library/Frameworks/CoreHaptics.framework; sourceTree = SDKROOT; };
@@ -518,9 +519,10 @@
 		EA1CC2F51499466B00B64424 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				38DA2F382CC2EDA100EAAFB8 /* level24.map */,
+				38321FF22BA614420047C437 /* level23.map */,
 				38C87A9F2BB89B2100C565FA /* credits.tga */,
 				38C87AA02BB89B2100C565FA /* title.ogg */,
-				38321FF22BA614420047C437 /* level23.map */,
 				38788A662B8747D20017E291 /* splash.wav */,
 				38788A612B8747C10017E291 /* enemy_jumping.wav */,
 				38788A622B8747C10017E291 /* enemy_slime.wav */,
