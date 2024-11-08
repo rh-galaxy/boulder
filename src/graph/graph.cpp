@@ -114,7 +114,7 @@ bool C_GraphWrapper::SetMode(int iWidth, int iHeight, bool bFullScreen, bool bRe
 	SDL_AddEventWatch(resizingEventWatcher, m_pWindow);
 
 	m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	//Checking for SDL initialization error
+	//checking for SDL initialization error
 	/*const char* sdl_error = SDL_GetError();
 	if (*sdl_error != '\0') {
 		sprintf(m_szErrorMsg, "SDL Error: %s", sdl_error);
@@ -128,7 +128,7 @@ bool C_GraphWrapper::SetMode(int iWidth, int iHeight, bool bFullScreen, bool bRe
 
 void C_GraphWrapper::Flip()
 {
-	//Update screen
+	//update screen
 	SDL_RenderPresent(m_pRenderer);
 	SDL_RenderClear(m_pRenderer);
 }
@@ -197,8 +197,6 @@ SDL_Texture* C_GraphWrapper::LoadTexture(C_Image* pSrcImg)
 		pSrcImg->GetBufferMemory(&pBuf, NULL);
 
 		int iPixelSize = iPixelFmt & 0x0f;
-
-		// fprintf(stdout, "param: %d %d %d\n", iWidth, iHeight, iPixelSize);
 
 		surf8 = NULL;
 		switch (iPixelSize) {
@@ -289,7 +287,7 @@ bool C_GraphWrapper::Blt(SDL_Texture* hTexture, int iW, int iH, int iX, int iY, 
 	dst_r.h = iH;
 
 	SDL_RenderSetViewport(m_pRenderer, NULL);
-	//Render texture to screen
+	//render texture to screen
 	SDL_RenderCopy(m_pRenderer, hTexture, &src_r, &dst_r);
 
 	return true;
@@ -327,7 +325,7 @@ bool C_GraphWrapper::Blt(SDL_Texture* hTexture, int iW, int iH, S_Rect* pSrcRect
 	dst_r.h = pSrcRect->height;
 
 	SDL_RenderSetViewport(m_pRenderer, NULL);
-	//Render texture to screen
+	//render texture to screen
 	SDL_RenderCopy(m_pRenderer, hTexture, &src_r, &dst_r);
 
 	return true;
@@ -373,7 +371,7 @@ bool C_GraphWrapper::Blt(SDL_Texture* hTexture, int iW, int iH, S_Rect* pSrcRect
 	dst_r.h = pDstRect->height;
 
 	SDL_RenderSetViewport(m_pRenderer, NULL);
-	//Render texture to screen
+	//render texture to screen
 	SDL_RenderCopy(m_pRenderer, hTexture, &src_r, &dst_r);
 
 	return true;
@@ -506,9 +504,11 @@ C_Image* C_GraphWrapper::GetRenderedAsImage(S_Rect* pRect, S_Color* pTranspCol)
 	bool bUseTransparent = pTranspCol != NULL;
 
 	//get image
-	uint8_t* pData = new uint8_t[stRect.width * stRect.height * (bUseTransparent ? 4 : 3)]; //allocate memory for storing the image
+	uint32_t iBytesNeeded = stRect.width * stRect.height * (bUseTransparent ? 4 : 3);
+	SDL_PixelFormatEnum iPixelFmt = bUseTransparent ? SDL_PixelFormatEnum::SDL_PIXELFORMAT_RGBA32 : SDL_PixelFormatEnum::SDL_PIXELFORMAT_RGB24;
+	uint8_t* pData = new uint8_t[iBytesNeeded]; //allocate memory for storing the image
 	SDL_Rect r = { stRect.x, stRect.y, stRect.width, stRect.height };
-	SDL_RenderReadPixels(m_pRenderer, &r, bUseTransparent ? SDL_PIXELFORMAT_RGBA32 : SDL_PIXELFORMAT_RGB24, pData, r.w * (bUseTransparent ? 4 : 3));
+	SDL_RenderReadPixels(m_pRenderer, &r, iPixelFmt, pData, r.w * (bUseTransparent ? 4 : 3));
 
 	//process image
 	C_Image* pImageObj = new C_Image(stRect.width, stRect.height, bUseTransparent ? _RGBA8888 : _RGB888, pData);

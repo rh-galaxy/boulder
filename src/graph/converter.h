@@ -12,20 +12,21 @@
 class C_Converter
 {
 public:
+	//initialize output pixel format
 	C_Converter(int iDstPixelFmt);
-	/* initialize output pixel format */
+	
+	//if (src == *dst) then *dst will contain the converted src.
+	//src is deleted before exit and is therefore invalid.
+	//if (src != *dst) then *dst will contain the converted src
+	//src is not deleted. (*dst should be NULL).
+	//if this function fails *result will be set to 0 else 1
 	void Convert(C_Image *pSrcImg, C_Image **o_pDstImg, int *o_iResult = NULL);
-	/* if (src == *dst) then *dst will contain the converted src.
-	src is deleted before exit and is therefore invalid.
-	if (src != *dst) then *dst will contain the converted src
-	src is not deleted. (*dst should be NULL).
-	if this function fails *result will be set to 0 else 1 */
+	//converts the src-color from the universal RGB888 format
+	//to the format specified in dst_pixelfmt
 	uint32_t GetAbsoluteColor(S_Color *pColor);
-	/* converts the src-color from the universal RGB888 format
-	to the format specified in dst_pixelfmt */
+	//converts the src-color from the format specified in dst_pixelfmt (!)
+	//to the universal RGB888 format
 	void GetColor(uint32_t iColor, S_Color *o_pColor);
-	/* converts the src-color from the format specified in dst_pixelfmt (!)
-	to the universal RGB888 format */
 
 	void SetDstPixelFormat(int iDstPixelFmt);
 private:

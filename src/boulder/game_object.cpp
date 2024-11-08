@@ -884,7 +884,7 @@ int C_Object::Update(double dTime)
 		m_pParent->MoveAbsolute(iX, iY);
 		C_Object::s_stListenerPos.x = m_iWorldPosX; C_Object::s_stListenerPos.y = m_iWorldPosY;
 	}
-				   break;
+	break;
 	}
 
 	return 0;
