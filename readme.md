@@ -34,7 +34,8 @@ Software:
 Building:
 1. Enter the package dir build/linux
 2. Type 'make all'
-   Binaries are copied to exe/linux_x64 on success
+3. Type 'make install'
+   Binaries are copied to exe/linux_x64
 
 Running:
 1. Enter the package dir ./exe/linux_x64

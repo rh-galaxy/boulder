@@ -89,8 +89,12 @@ Change log:
  * version 1.01
  20241018
  * fix repeat up/down in menu list
- * fix gamepad working on windows 11?
+ * fix gamepad working on windows 11
  * add level24.map
+ * version 1.01
+ 20241112
+ * merge pull requests for Makefile
+ * add create tar.gz without lib and exe release file
  * version 1.01
 
 --------------------------------------------------------------------------------------

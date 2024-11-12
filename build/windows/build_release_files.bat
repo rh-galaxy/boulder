@@ -20,6 +20,7 @@ SET ver=1.01
 
 SET dest_path=..\..\release_packages
 SET path_source=%dest_path%\boulder_%ver%_src
+SET path_source_plain=%dest_path%\boulder_%ver%_src_plain
 SET path_windows_bin=%dest_path%\boulder_%ver%_windows_bin
 SET path_linux_bin=%dest_path%\boulder_%ver%_linux_bin
 SET path_mac_bin=%dest_path%\boulder_%ver%_mac_bin
@@ -151,6 +152,97 @@ zip_exec.exe "%dest_path%\boulder_%ver%_src.zip" "boulder_%ver%_src/exe/linux_x6
 REM zip_exec.exe "%dest_path%\boulder_%ver%_src.zip" "boulder_%ver%_src/exe/mac/Boulder.app/Contents/MacOS/Boulder"
 REM zip_exec.exe "%dest_path%\boulder_%ver%_src.zip" "boulder_%ver%_src/exe/mac/MapEditor.app/Contents/MacOS/MapEditor"
 
+REM ---------------------------------------------------------------------------
+REM only source (without libs)
+
+REM /
+xcopy ..\..\*.md "%path_source_plain%\"
+xcopy ..\..\*.txt "%path_source_plain%\"
+xcopy ..\..\*.jpg "%path_source_plain%\"
+REM /src
+md "%path_source_plain%\src"
+md "%path_source_plain%\src\common"
+md "%path_source_plain%\src\editor"
+md "%path_source_plain%\src\boulder"
+md "%path_source_plain%\src\graph"
+xcopy ..\..\src\common\*.cpp   "%path_source_plain%\src\common\"
+xcopy ..\..\src\common\*.h     "%path_source_plain%\src\common\"
+xcopy ..\..\src\editor\*.cpp   "%path_source_plain%\src\editor\"
+xcopy ..\..\src\editor\*.h     "%path_source_plain%\src\editor\"
+xcopy ..\..\src\boulder\*.cpp "%path_source_plain%\src\boulder\"
+xcopy ..\..\src\boulder\*.h   "%path_source_plain%\src\boulder\"
+xcopy ..\..\src\graph\*.cpp    "%path_source_plain%\src\graph\"
+xcopy ..\..\src\graph\*.h      "%path_source_plain%\src\graph\"
+REM /ext_include
+md "%path_source_plain%\ext_include"
+md "%path_source_plain%\ext_include\pa"
+md "%path_source_plain%\ext_include\mac"
+md "%path_source_plain%\ext_include\sdl"
+xcopy ..\..\ext_include\pa\*.h   "%path_source_plain%\ext_include\pa\"
+xcopy ..\..\ext_include\pa\*.c   "%path_source_plain%\ext_include\pa\"
+xcopy ..\..\ext_include\mac\*.h     "%path_source_plain%\ext_include\mac\"
+xcopy ..\..\ext_include\mac\*.cpp   "%path_source_plain%\ext_include\mac\"
+xcopy ..\..\ext_include\mac\*.m     "%path_source_plain%\ext_include\mac\"
+xcopy ..\..\ext_include\sdl\*.*     "%path_source_plain%\ext_include\sdl\"
+REM /lib
+REM removed
+REM /exe
+REM removed
+REM /original_gfx
+md "%path_source_plain%\original_gfx"
+xcopy ..\..\original_gfx\* "%path_source_plain%\original_gfx\"
+REM /build
+md "%path_source_plain%\build"
+md "%path_source_plain%\build\linux"
+md "%path_source_plain%\build\mac"
+md "%path_source_plain%\build\mac\Boulder"
+md "%path_source_plain%\build\mac\Boulder\Boulder"
+md "%path_source_plain%\build\mac\Boulder\Boulder\en.lproj"
+md "%path_source_plain%\build\mac\Boulder\Boulder.xcodeproj"
+md "%path_source_plain%\build\mac\Boulder.xcworkspace"
+md "%path_source_plain%\build\mac\MapEditor"
+md "%path_source_plain%\build\mac\MapEditor\MapEditor"
+md "%path_source_plain%\build\mac\MapEditor\MapEditor\en.lproj"
+md "%path_source_plain%\build\mac\MapEditor\MapEditor.xcodeproj"
+md "%path_source_plain%\build\windows"
+xcopy ..\..\build\linux\Makefile "%path_source_plain%\build\linux\"
+xcopy ..\..\build\linux\virtualbox.txt "%path_source_plain%\build\linux\"
+xcopy ..\..\build\mac\Boulder\*.icns "%path_source_plain%\build\mac\Boulder\"
+xcopy ..\..\build\mac\Boulder\Boulder\Boulder-Info.plist "%path_source_plain%\build\mac\Boulder\Boulder\"
+xcopy ..\..\build\mac\Boulder\Boulder.xcodeproj\project.pbxproj "%path_source_plain%\build\mac\Boulder\Boulder.xcodeproj\"
+xcopy ..\..\build\mac\Boulder.xcworkspace\contents.xcworkspacedata "%path_source_plain%\build\mac\Boulder.xcworkspace\"
+xcopy ..\..\build\mac\MapEditor\*.icns "%path_source_plain%\build\mac\MapEditor\"
+xcopy ..\..\build\mac\MapEditor\MapEditor\MapEditor-Info.plist "%path_source_plain%\build\mac\MapEditor\MapEditor\"
+xcopy ..\..\build\mac\MapEditor\MapEditor.xcodeproj\project.pbxproj "%path_source_plain%\build\mac\MapEditor\MapEditor.xcodeproj\"
+xcopy ..\..\build\windows\*.bat "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\*.rc "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\*.ico "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\*.sln "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\zip_exec.exe "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\Boulder.vcxproj "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\Boulder.vcxproj.user "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\Boulder.vcxproj.filters "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\MapEditor.vcxproj "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\MapEditor.vcxproj.filters "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\MapEditor.vcxproj.user "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\fnt_comp.vcxproj "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\fnt_comp.vcxproj.filters "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\img_cut.vcxproj "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\img_cut.vcxproj.filters "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\res_comp.vcxproj "%path_source_plain%\build\windows\"
+xcopy ..\..\build\windows\zip_exec.vcxproj "%path_source_plain%\build\windows\"
+REM /utils
+md "%path_source_plain%\utils"
+md "%path_source_plain%\utils\fnt_comp"
+md "%path_source_plain%\utils\res_comp"
+md "%path_source_plain%\utils\img_cut"
+md "%path_source_plain%\utils\zip_exec"
+xcopy ..\..\utils\fnt_comp\*   "%path_source_plain%\utils\fnt_comp\"
+xcopy ..\..\utils\res_comp\*   "%path_source_plain%\utils\res_comp\"
+xcopy ..\..\utils\img_cut\*   "%path_source_plain%\utils\img_cut\"
+xcopy ..\..\utils\zip_exec\*   "%path_source_plain%\utils\zip_exec\"
+
+%sevenzip% a -ttar -so "%dest_path%\boulder_%ver%_src_plain.tar" "%path_source_plain%" | %sevenzip% a -si "%dest_path%\boulder_%ver%_src_plain.tar.gz"
 
 REM ---------------------------------------------------------------------------
 REM linux bin (x64)
