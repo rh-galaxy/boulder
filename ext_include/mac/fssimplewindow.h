@@ -1,7 +1,7 @@
 #ifndef FSSIMPLEWINDOW_IS_INCLUDED
 #define FSSIMPLEWINDOW_IS_INCLUDED
 
-// With the move from native to SDL2 this file only contents that remain is some dialog/directory functions
+//with the move from native to SDL2 this file only contents that remain is some dialog/directory functions
 // written by rh_galaxy
 
 struct file_dialog_info
@@ -13,7 +13,7 @@ struct file_dialog_info
 
 
 #ifdef __cplusplus
-// This file needs to be included from Objective-C code
+//this file needs to be included from Objective-C code
 // so C++ specific declaration must be enclosed by #ifdef __cplusplus
 
 void FsChangeToProgramDir();

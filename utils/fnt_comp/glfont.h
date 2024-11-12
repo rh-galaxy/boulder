@@ -12,14 +12,14 @@ public:
 	C_FontGL();
 	~C_FontGL();
 
-	bool Load(char *i_szFontname, int i_iFontHeight = 24, int i_iThickness = 700/*(100-900 (400=normal, 700=bold)*/, bool i_bUnderLined = false, bool i_bItallic = false);
+	bool Load(char *szFontname, int iFontHeight = 24, int iThickness = 700/*(100-900 (400=normal, 700=bold)*/, bool bUnderLined = false, bool bItallic = false);
 	bool GetHeights(int *o_iChar, int *o_iTotal, int *o_BelowBaseline);
 	void Free();
 
-	void SetColor(const S_FColor &i_stColor) {m_stColor = i_stColor;};
-	int GetWidth(const char *i_szFmt, ...);
-	void Print(int i_iX, int i_iY, const char *i_szFmt, ...);
-	bool GetCharWidths(const char i_cChar, int *o_iPreX, int *o_iCharX, int *o_iPostX);
+	void SetColor(const S_FColor &stColor) {m_stColor = stColor;};
+	int GetWidth(const char *szFmt, ...);
+	void Print(int iX, int iY, const char *szFmt, ...);
+	bool GetCharWidths(const char cChar, int *o_iPreX, int *o_iCharX, int *o_iPostX);
 private:
 	C_GraphWrapperGL *m_pclGraph;
 

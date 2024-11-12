@@ -24,17 +24,17 @@ struct S_TargaHeader
 };
 #pragma pack()
 
-C_Image *C_TargaImg::Load(void *i_pTargaData)
+C_Image *C_TargaImg::Load(void *pTargaData)
 {
-	return LoadPrivate(NULL, NULL, i_pTargaData);
+	return LoadPrivate(NULL, NULL, pTargaData);
 }
 
-C_Image *C_TargaImg::Load(const char *i_szFilename, const char *i_szResname)
+C_Image *C_TargaImg::Load(const char *szFilename, const char *szResname)
 {
-	return LoadPrivate(i_szFilename, i_szResname, NULL);
+	return LoadPrivate(szFilename, szResname, NULL);
 }
 
-C_Image *C_TargaImg::LoadPrivate(const char *i_szFilename, const char *i_szResname, void *i_pTargaData)
+C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, void *pTargaData)
 {
 	S_TargaHeader stHeader;                    //the header
 	C_Image       *pclImg;                     //the image to fill
@@ -58,13 +58,13 @@ C_Image *C_TargaImg::LoadPrivate(const char *i_szFilename, const char *i_szResna
 	int           iWidth, iHeight;
 	int           iPixelfmt, iLineBytes;
 
-	if(i_szFilename || i_szResname) {
+	if(szFilename || szResname) {
 		pclResource = new C_Resource();
-		pclResource->SetFilename(i_szFilename, i_szResname);
+		pclResource->SetFilename(szFilename, szResname);
 		if(!pclResource->Read(&stHeader, sizeof(S_TargaHeader))) goto error; //read header
 	} else {
-		if(!i_pTargaData) goto error;
-		pFilebufCpy = pFilebuf = (uint8_t*)i_pTargaData;
+		if(!pTargaData) goto error;
+		pFilebufCpy = pFilebuf = (uint8_t*)pTargaData;
 		memcpy(&stHeader, pFilebuf, sizeof(S_TargaHeader));
 		pFilebufCpy += sizeof(S_TargaHeader);
 		bDelmem = false;
@@ -180,7 +180,7 @@ error:
 	return NULL;        //faliure
 }
 
-bool C_TargaImg::Save(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip)
+bool C_TargaImg::Save(const char *szFilename, C_Image *pclSrc, bool bFlip)
 {
 	S_TargaHeader stHeader;
 	uint8_t       aiPal[768];
@@ -188,17 +188,17 @@ bool C_TargaImg::Save(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip)
 	int           iWidth, iHeight, iPixelfmt;
 	int           iWidthBytes, iLineBytes, iResult;
 
-	if(!i_pclSrc) return false; //no image?
+	if(!pclSrc) return false; //no image?
 
 	//convert imageformat if not same...
-	i_pclSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
+	pclSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
 	switch(iPixelfmt & 0x0f) {
 		case 2: iPixelfmt = _BGR555;   break;
 		case 3: iPixelfmt = _BGR888;   break;
 		case 4: iPixelfmt = _BGRA8888; break;
 	}
 	C_Converter *pConv = new C_Converter(iPixelfmt);
-	pConv->Convert(i_pclSrc, &pclImg, &iResult);
+	pConv->Convert(pclSrc, &pclImg, &iResult);
 	delete pConv;
 	if(!iResult) return false; //error converting
 
@@ -206,7 +206,7 @@ bool C_TargaImg::Save(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip)
 	stHeader.width = (uint16_t)iWidth;
 	stHeader.height = (uint16_t)iHeight;
 	stHeader.bitsperpixel = (uint8_t)((iPixelfmt & 0x0f) * 8);
-	if(!i_bFlip) stHeader.img_descriptor |= 0x20; //not fliped top-bottom
+	if(!bFlip) stHeader.img_descriptor |= 0x20; //not fliped top-bottom
 	stHeader.img_typecode = stHeader.bitsperpixel>8 ? 2 : 1;
 
 	uint8_t *pMemToReadFrom, *pPalSrc;
@@ -228,7 +228,7 @@ bool C_TargaImg::Save(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip)
 
 	C_Resource *pclFile = new C_Resource();
 	pclFile->SetMode(false);
-	bool bOK = pclFile->SetFilename(i_szFilename);
+	bool bOK = pclFile->SetFilename(szFilename);
 	if(bOK) bOK = pclFile->Write(&stHeader, sizeof(stHeader)); //write header
 	if(stHeader.img_typecode == 1) {
 		if(bOK) bOK = pclFile->Write(&aiPal, 768);             //if pal: write it
@@ -267,7 +267,7 @@ bool C_TargaImg::Save(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip)
 	} \
 }
 
-bool C_TargaImg::SaveCompressed(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip)
+bool C_TargaImg::SaveCompressed(const char *szFilename, C_Image *pclSrc, bool bFlip)
 {
 	S_TargaHeader stHeader;
 	uint8_t       aiPal[768];
@@ -275,17 +275,17 @@ bool C_TargaImg::SaveCompressed(const char *i_szFilename, C_Image *i_pclSrc, boo
 	int           iWidth, iHeight, iPixelfmt;
 	int           iWidthBytes, iLineBytes, iResult;
 
-	if(!i_pclSrc) return false; //no image?
+	if(!pclSrc) return false; //no image?
 
 	//convert imageformat if not same...
-	i_pclSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
+	pclSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
 	switch(iPixelfmt & 0x0f) {
 		case 2: iPixelfmt = _BGR555;   break;
 		case 3: iPixelfmt = _BGR888;   break;
 		case 4: iPixelfmt = _BGRA8888; break;
 	}
 	C_Converter *pConv = new C_Converter(iPixelfmt);
-	pConv->Convert(i_pclSrc, &pclImg, &iResult);
+	pConv->Convert(pclSrc, &pclImg, &iResult);
 	delete pConv;
 	if(!iResult) return false; //error converting
 
@@ -293,7 +293,7 @@ bool C_TargaImg::SaveCompressed(const char *i_szFilename, C_Image *i_pclSrc, boo
 	stHeader.width = (uint16_t)iWidth;
 	stHeader.height = (uint16_t)iHeight;
 	stHeader.bitsperpixel = (uint8_t)((iPixelfmt & 0x0f) * 8);
-	if(!i_bFlip) stHeader.img_descriptor |= 0x20; //not fliped top-bottom
+	if(!bFlip) stHeader.img_descriptor |= 0x20; //not fliped top-bottom
 	stHeader.img_typecode = stHeader.bitsperpixel>8 ? 10 : 9; //compressed
 
 	uint8_t *pSrcBuf, *pPalSrc;
@@ -313,7 +313,7 @@ bool C_TargaImg::SaveCompressed(const char *i_szFilename, C_Image *i_pclSrc, boo
 		}
 	}
 
-	FILE *pFile = fopen(i_szFilename, "wb");
+	FILE *pFile = fopen(szFilename, "wb");
 	fwrite(&stHeader, sizeof(stHeader), 1, pFile);                //write header
 	if(stHeader.img_typecode == 9) fwrite(&aiPal, 768, 1, pFile); //if pal: write it
 

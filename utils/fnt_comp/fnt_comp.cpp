@@ -14,7 +14,7 @@
 #define FONTNAME "arial"
 #define FONTSIZE -37
 
-bool BuildFont(char *i_szFontName, int i_iFontHeight, int i_iThickness, char *i_szOutputFontNameBase)
+bool BuildFont(char *szFontName, int iFontHeightIn, int iThickness, char *szOutputFontNameBase)
 {
 	int i, x, y;
 	bool bResult = false;
@@ -29,17 +29,17 @@ bool BuildFont(char *i_szFontName, int i_iFontHeight, int i_iThickness, char *i_
 	char szFilenameFNT[MAX_PATH];
 	char szFontNameString[256];
 #ifdef WIN32
-	strcpy(szFontNameString, i_szFontName);
+	strcpy(szFontNameString, szFontName);
 #else
-	//sprintf(szFontNameString, "-*-%s-%s-r-normal--%d-*-*-*-*-*-*-*", i_szFontName, i_iThickness==700 ? "*":"bold", i_iFontHeight);
+	//sprintf(szFontNameString, "-*-%s-%s-r-normal--%d-*-*-*-*-*-*-*", i_szFontName, i_iThickness==700 ? "*":"bold", iFontHeightIn);
 	//sadly this^ does not work any more (20240405), the below works but does not select font or thickness, use windows version to create fnt
-	sprintf(szFontNameString, "r%d", abs(i_iFontHeight));
+	sprintf(szFontNameString, "r%d", abs(iFontHeightIn));
 #endif
-	sprintf(szFilenameTGA, "%s.tga", i_szOutputFontNameBase);
-	sprintf(szFilenameFNT, "%s.fnt", i_szOutputFontNameBase);
+	sprintf(szFilenameTGA, "%s.tga", szOutputFontNameBase);
+	sprintf(szFilenameFNT, "%s.fnt", szOutputFontNameBase);
 
 	pclFont = new C_FontGL();
-	bResult = pclFont->Load(szFontNameString, i_iFontHeight, i_iThickness);
+	bResult = pclFont->Load(szFontNameString, iFontHeightIn, iThickness);
 	int iFontHeight, iTotalHeight, iBelowBase, iWasteY;
 	pclFont->GetHeights(&iFontHeight, &iTotalHeight, &iBelowBase);
 	//iWasteY = (iTotalHeight-iFontHeight);
@@ -92,19 +92,19 @@ out:
 	return bResult;
 }
 
-bool TestFont(char *i_szFontNameBase)
+bool TestFont(char *szFontNameBase)
 {
 	bool bResult;
 	C_GraphWrapperGL *pclGraph = C_GraphWrapperGL::GetGraphWrapperObject();
 	C_Font *pclFont = new C_Font(_BGRA8888);
-	bResult = pclFont->Load(i_szFontNameBase, NULL);
+	bResult = pclFont->Load(szFontNameBase, NULL);
 	if(bResult) {
 		S_FColor stColor = S_FCOLORMAKE(0,0,1,1); //blue
 		pclFont->SetColor(stColor);
 		int iSurfaceWidth = pclGraph->GetModeWidth();
 		S_Rect stRect = {0, 512, iSurfaceWidth, 256};
 		pclGraph->Rect(&stRect); //make white rect
-		pclFont->Print(&stRect, FONT_CENTERED, "Font: %s\nTEST string 1\n:!_?/%%.,jpq^()", i_szFontNameBase);
+		pclFont->Print(&stRect, FONT_CENTERED, "Font: %s\nTEST string 1\n:!_?/%%.,jpq^()", szFontNameBase);
 	}
 	delete pclFont;
 

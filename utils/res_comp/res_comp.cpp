@@ -18,7 +18,7 @@ struct S_Item
 typedef std::vector<S_Item> C_ItemList;
 
 
-bool CreateResource(const char *i_szExclude, const char *i_szDest)
+bool CreateResource(const char *szExclude, const char *szDest)
 {
 	bool bOK, bResult = false;
 	S_Item stItem;
@@ -38,11 +38,11 @@ bool CreateResource(const char *i_szExclude, const char *i_szDest)
 		}
 		if(strcmp(szFilename, ".")==0) continue;
 		if(strcmp(szFilename, "..")==0) continue;
-		if(strcmp(szFilename, i_szExclude)==0) {
+		if(strcmp(szFilename, szExclude)==0) {
 			//printf("warning: skipping excluded file (%s)\n", szFilename);
 			continue;
 		}
-		if(strcmp(szFilename, i_szDest)==0) continue;
+		if(strcmp(szFilename, szDest)==0) continue;
 		stItem.iNameLength = (uint8_t)iLen;
 		strncpy(stItem.szName, szFilename, sizeof(stItem.szName));
 		stItem.iFileStart = 0; //not known yet
@@ -59,8 +59,8 @@ bool CreateResource(const char *i_szExclude, const char *i_szDest)
 
 	//write header
 	pclFile->SetMode(false);
-	if(!pclFile->SetFilename(i_szDest)) {
-		printf("error: could not open destination (%s)\n", i_szDest);
+	if(!pclFile->SetFilename(szDest)) {
+		printf("error: could not open destination (%s)\n", szDest);
 		goto error;
 	}
 	iFileStart = iHeaderLen;
@@ -75,7 +75,7 @@ bool CreateResource(const char *i_szExclude, const char *i_szDest)
 		iFileStart += pstItem->iFileLength;
 	}
 	if(!bOK) {
-		printf("error: could not write to destination (%s)\n", i_szDest);
+		printf("error: could not write to destination (%s)\n", szDest);
 		goto error;
 	}
 
@@ -95,12 +95,12 @@ bool CreateResource(const char *i_szExclude, const char *i_szDest)
 		bOK = pclFile->Write(pData, pstItem->iFileLength);
 		delete[] pData;
 		if(!bOK) {
-			printf("error: could not write to destination (%s)\n", i_szDest);
+			printf("error: could not write to destination (%s)\n", szDest);
 			goto error;
 		}
 	}
 
-	printf("\nresource created as: '%s'\n", i_szDest);
+	printf("\nresource created as: '%s'\n", szDest);
 	bResult = true;
 error:
 	delete pclFile; //closes the file

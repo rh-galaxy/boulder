@@ -46,16 +46,16 @@ S_MaskShift TBL_LOOKUP[4][4] = {
 };
 
 //constructor, sets m_iDstPixelFmt format
-C_Converter::C_Converter(int i_iDstPixelFmt)
+C_Converter::C_Converter(int iDstPixelFmt)
 {
-	SetDstPixelFormat(i_iDstPixelFmt);
+	SetDstPixelFormat(iDstPixelFmt);
 }
 
 //set m_iDstPixelFmt format
-void C_Converter::SetDstPixelFormat(int i_iDstPixelFmt)
+void C_Converter::SetDstPixelFormat(int iDstPixelFmt)
 {
-	m_iDstPixelFmt = i_iDstPixelFmt;
-	m_iDstBytes    = i_iDstPixelFmt & 0x0f;
+	m_iDstPixelFmt = iDstPixelFmt;
+	m_iDstBytes    = iDstPixelFmt & 0x0f;
 }
 
 //convert an image to m_iDstPixelFmt format
@@ -98,22 +98,22 @@ void C_Converter::Convert(C_Image *src, C_Image **dst, int *o_iResult)
 }
 
 //convert a color in _RGBA8888 format to m_iDstPixelFmt format
-uint32_t C_Converter::GetAbsoluteColor(S_Color *i_pstColor)
+uint32_t C_Converter::GetAbsoluteColor(S_Color *pColor)
 {
 	uint32_t iColor = 0;
 
 	if(m_iDstBytes == 1) return 0;
 	if(m_iDstPixelFmt == _RGB888) { //same format?
-		memcpy(&iColor, i_pstColor, 3);
+		memcpy(&iColor, pColor, 3);
 		return iColor;
 	}
 	if(m_iDstPixelFmt == _RGBA8888) { //same format?
-		memcpy(&iColor, i_pstColor, 4);
+		memcpy(&iColor, pColor, 4);
 		return iColor;
 	}
 	m_iWidth = m_iHeight = 1;
 	m_iSrcPixelFmt = _RGBA8888;
-	m_pSrcBuf.u8ptr = (uint8_t *)i_pstColor;
+	m_pSrcBuf.u8ptr = (uint8_t *)pColor;
 	m_iSrcBytes = m_iSrcPixelFmt & 0x0f;
 
 	m_pDstBuf.u32ptr = &iColor;
@@ -124,7 +124,7 @@ uint32_t C_Converter::GetAbsoluteColor(S_Color *i_pstColor)
 }
 
 //convert a color in m_iDstPixelFmt format to _RGBA8888 format
-void C_Converter::GetColor(uint32_t i_iColor, S_Color *o_pstColor)
+void C_Converter::GetColor(uint32_t iColor, S_Color *o_pColor)
 {
 	m_iSrcPixelFmt = m_iDstPixelFmt; //hack to get srcformat from constructor
 	m_iSrcBytes = m_iSrcPixelFmt & 0x0f;
@@ -133,19 +133,19 @@ void C_Converter::GetColor(uint32_t i_iColor, S_Color *o_pstColor)
 
 	if(m_iSrcBytes == 1) return;
 
-	o_pstColor->a = 0;
+	o_pColor->a = 0;
 	if(m_iSrcPixelFmt == _RGB888) { //same format?
-		memcpy(o_pstColor, &i_iColor, 3);
+		memcpy(o_pColor, &iColor, 3);
 		return;
 	}
 	if(m_iSrcPixelFmt == _RGBA8888) { //same format?
-		memcpy(o_pstColor, &i_iColor, 4);
+		memcpy(o_pColor, &iColor, 4);
 		return;
 	}
 	m_iWidth = m_iHeight = 1;
 	m_iSrcAlign = m_iDstAlign = 0;
-	m_pSrcBuf.u32ptr = &i_iColor;
-	m_pDstBuf.u8ptr = (uint8_t *)o_pstColor;
+	m_pSrcBuf.u32ptr = &iColor;
+	m_pDstBuf.u8ptr = (uint8_t *)o_pColor;
 
 	_rgbtorgb();
 }

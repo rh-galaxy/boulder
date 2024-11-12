@@ -17,7 +17,7 @@
 #endif
 
 //from settings file
-char g_szInBaseName[64];
+char g_szInBaseName[256];
 char g_szInExtension[32];
 int  g_iInBaseIndex, g_iInNumNameDigits;
 char g_szOutBaseName[64];
@@ -29,23 +29,23 @@ int  g_iFlipXY; //0 or 1
 
 //global read text file helpers
 //////////////////////////////////////////////////////////////////////////////////////////
-char *GetNextLineAndCommand(FILE *i_pFile, char *i_szLine, char *i_szCommand)
+char *GetNextLineAndCommand(FILE *pFile, char *szLine, char * o_szCommand)
 {
-	i_szCommand[0] = 0; //reset command
-	char *szRet = fgets(i_szLine, 512, i_pFile);
-	if(szRet) sscanf(i_szLine, "%s", i_szCommand);
+	o_szCommand[0] = 0; //reset command
+	char *szRet = fgets(szLine, 512, pFile);
+	if(szRet) sscanf(szLine, "%s", o_szCommand);
 	return szRet;
 }
 
-void GetWithin(char *i_szString, char i_cCh)
+void GetWithin(char *io_szString, char cCh)
 {
 	int i = 0, iStart = 0;
 
-	while(i_szString[i]!=i_cCh && i_szString[i]!=0) i++;
+	while(io_szString[i]!=cCh && io_szString[i]!=0) i++;
 	i++;
 
-	while(i_szString[i]!=i_cCh && i_szString[i]!=0) i_szString[iStart++] = i_szString[i++];
-	i_szString[iStart] = 0;
+	while(io_szString[i]!=cCh && io_szString[i]!=0) io_szString[iStart++] = io_szString[i++];
+	io_szString[iStart] = 0;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -74,7 +74,7 @@ bool ReadSettings()
 
 		if(strcmp(szCommand, "*INPUTBASENAME") == 0) {
 			GetWithin(szLine, '"');
-			if(strlen(szLine)>63) continue;
+			if(strlen(szLine)>255) continue;
 			strcpy(g_szInBaseName, szLine);
 			iAllRead++;
 			continue;
@@ -133,19 +133,19 @@ bool ReadSettings()
 	return true;
 }
 
-void GetOutputName(int i_iX, int i_iY, char *o_szName)
+void GetOutputName(int iX, int iY, char *o_szName)
 {
 	if(g_iFlipXY) {
-		int iTmp = i_iY;
-		i_iY = i_iX;
-		i_iX = iTmp;
+		int iTmp = iY;
+		iY = iX;
+		iX = iTmp;
 	}
-	sprintf(o_szName, "%s%05d_%05d.tga", g_szOutBaseName, i_iX, i_iY);
+	sprintf(o_szName, "%s%05d_%05d.tga", g_szOutBaseName, iX, iY);
 }
 
-void GetInputName(int i_iX, int i_iY, char *o_szName)
+void GetInputName(int iX, int iY, char *o_szName)
 {
-	int iNumber = g_iInBaseIndex+(i_iY*g_iInNumX)+i_iX;
+	int iNumber = g_iInBaseIndex+(iY*g_iInNumX)+iX;
 	sprintf(o_szName, "%s%0*d%s", g_szInBaseName, g_iInNumNameDigits, iNumber, g_szInExtension);
 }
 

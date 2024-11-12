@@ -63,14 +63,14 @@ public:
 	C_Resource();
 	~C_Resource();
 
-	void SetMode(bool i_bReading); //default reading (resets filenames)
-	bool SetFilename(const char* i_szFilename);
+	void SetMode(bool bReading); //default reading (resets filenames)
+	bool SetFilename(const char* szFilename);
 
-	bool   Read(void* i_pData, uint32_t i_iLength); //length==0xffffffff means entire resource
-	void   Seek(uint32_t i_iPos, int i_iMode);
+	bool   Read(void* pData, uint32_t iLength); //length==0xffffffff means entire resource
+	void   Seek(uint32_t iPos, int iMode);
 	uint32_t GetSize() { return m_iFileSize; };
 
-	bool Write(void* i_pData, uint32_t i_iLength);
+	bool Write(void* pData, uint32_t iLength);
 
 private:
 	void Reset();
@@ -101,17 +101,17 @@ C_Resource::~C_Resource()
 	Reset();
 }
 
-void C_Resource::SetMode(bool i_bReading)
+void C_Resource::SetMode(bool bReading)
 {
-	m_bReading = i_bReading;
+	m_bReading = bReading;
 	Reset();
 }
 
-bool C_Resource::SetFilename(const char* i_szFilename)
+bool C_Resource::SetFilename(const char* szFilename)
 {
 	if (m_pFileHandle) Reset();
 
-	m_pFileHandle = fopen(i_szFilename, m_bReading ? "rb" : "wb");
+	m_pFileHandle = fopen(szFilename, m_bReading ? "rb" : "wb");
 	if (m_pFileHandle == NULL) return false; //error opening
 
 	fseek(m_pFileHandle, 0, SEEK_END);
@@ -121,35 +121,35 @@ bool C_Resource::SetFilename(const char* i_szFilename)
 	return true;
 }
 
-bool C_Resource::Read(void* i_pData, uint32_t i_iLength)
+bool C_Resource::Read(void* pData, uint32_t iLength)
 {
 	bool bResult = false;
 	if (m_pFileHandle && m_bReading) {
-		if (i_iLength == 0) return true;
-		if (i_iLength == 0xffffffff) i_iLength = (m_iFileStart + m_iFileSize)
+		if (iLength == 0) return true;
+		if (iLength == 0xffffffff) iLength = (m_iFileStart + m_iFileSize)
 			- (uint32_t)ftell(m_pFileHandle); //we will never handle more than 4GB
-		if (fread(i_pData, i_iLength, 1, m_pFileHandle) == 1) bResult = true;
+		if (fread(pData, iLength, 1, m_pFileHandle) == 1) bResult = true;
 	}
 	return bResult;
 }
 
-bool C_Resource::Write(void* i_pData, uint32_t i_iLength)
+bool C_Resource::Write(void* pData, uint32_t iLength)
 {
 	bool bResult = false;
 	if (m_pFileHandle && !m_bReading) {
-		if (i_iLength == 0) return true;
-		if (fwrite(i_pData, i_iLength, 1, m_pFileHandle) == 1) bResult = true;
+		if (iLength == 0) return true;
+		if (fwrite(pData, iLength, 1, m_pFileHandle) == 1) bResult = true;
 	}
 	return bResult;
 }
 
-void C_Resource::Seek(uint32_t i_iPos, int i_iMode)
+void C_Resource::Seek(uint32_t iPos, int iMode)
 {
 	if (m_pFileHandle) {
-		switch (i_iMode) {
-		case SEEK_SET: fseek(m_pFileHandle, m_iFileStart + i_iPos, i_iMode); break;
-		case SEEK_CUR: fseek(m_pFileHandle, i_iPos, i_iMode); break;
-		case SEEK_END: fseek(m_pFileHandle, (m_iFileStart + m_iFileSize) - i_iPos, SEEK_SET); break;
+		switch (iMode) {
+		case SEEK_SET: fseek(m_pFileHandle, m_iFileStart + iPos, iMode); break;
+		case SEEK_CUR: fseek(m_pFileHandle, iPos, iMode); break;
+		case SEEK_END: fseek(m_pFileHandle, (m_iFileStart + m_iFileSize) - iPos, SEEK_SET); break;
 		}
 	}
 }
@@ -201,23 +201,23 @@ public:
 	C_ZipFile();
 	~C_ZipFile();
 
-	bool Open(char *i_szZipFile);
-	bool Save(char *i_szZipFile);
+	bool Open(char *szZipFile);
+	bool Save(char *szZipFile);
 
-	bool IsDirectory(char *i_szFullFileName);
-	bool IsNormal(char *i_szFullFileName);
-	bool IsExecutable(char *i_szFullFileName);
+	bool IsDirectory(char *szFullFileName);
+	bool IsNormal(char *szFullFileName);
+	bool IsExecutable(char *szFullFileName);
 
-	bool SetDirectory(char *i_szFullFileName);
-	bool SetNormal(char *i_szFullFileName);
-	bool SetExecutable(char *i_szFullFileName);
+	bool SetDirectory(char *szFullFileName);
+	bool SetNormal(char *szFullFileName);
+	bool SetExecutable(char *szFullFileName);
 
 	//helpers
-	static void SwapFromLittleEndian(void *i_pData, int i_iNumBytes);
-	static void SwapToLittleEndian(void *i_pData, int i_iNumBytes);
+	static void SwapFromLittleEndian(void *pData, int iNumBytes);
+	static void SwapToLittleEndian(void *pData, int iNumBytes);
 private:
 	void Free();
-	int FindFileIndexInCD(char *i_szFile);
+	int FindFileIndexInCD(char *szFile);
 
 	bool m_bOpenOK;
 
@@ -243,6 +243,9 @@ C_ZipFile::C_ZipFile()
 	m_szExtra      = NULL;
 	m_szComments   = NULL;
 	m_bOpenOK      = false;
+
+	memset(&m_stCDEnd, 0, sizeof(m_stCDEnd));
+	memset(&m_stCDEndReadable, 0, sizeof(m_stCDEndReadable));
 }
 
 C_ZipFile::~C_ZipFile()
@@ -269,12 +272,12 @@ void C_ZipFile::Free()
 	m_bOpenOK = false;
 }
 
-bool C_ZipFile::Open(char *i_szZipFile)
+bool C_ZipFile::Open(char *szZipFile)
 {
 	Free();
 	bool bResult = false;
 	C_Resource *pclRes = new C_Resource();
-	if(pclRes->SetFilename(i_szZipFile)) {
+	if(pclRes->SetFilename(szZipFile)) {
 		int iLen, iExtraOffset;
 		uint32_t iSize = pclRes->GetSize();
 		m_pZipMem = new uint8_t[iSize];
@@ -382,14 +385,14 @@ out:
 	return bResult;
 }
 
-bool C_ZipFile::Save(char *i_szZipFile)
+bool C_ZipFile::Save(char *szZipFile)
 {
 	bool bResult = false;
 	if(!m_bOpenOK) return false;
 
 	C_Resource *pclFile = new C_Resource();
 	pclFile->SetMode(false);
-	if(pclFile->SetFilename(i_szZipFile)) {
+	if(pclFile->SetFilename(szZipFile)) {
 		bResult = pclFile->Write(m_pZipMem, m_stCDEndReadable.cd_start); //write all up until the CD (same as source)
 		//CD entries
 		for(int i=0; i<m_iNumFiles; i++) {
@@ -415,9 +418,9 @@ bool C_ZipFile::Save(char *i_szZipFile)
 	return bResult;
 }
 
-bool C_ZipFile::IsExecutable(char *i_szFullFileName)
+bool C_ZipFile::IsExecutable(char *szFullFileName)
 {
-	int iIdx = FindFileIndexInCD(i_szFullFileName);
+	int iIdx = FindFileIndexInCD(szFullFileName);
 	if(iIdx>=0) {
 		bool bIsExec = (m_pCDEntriesReadable[iIdx].ver&0xff00)==0x0300;
 		if(bIsExec) bIsExec = (m_pCDEntriesReadable[iIdx].ver_needed&0xff00)==0x0300;
@@ -427,9 +430,9 @@ bool C_ZipFile::IsExecutable(char *i_szFullFileName)
 	return false;
 }
 
-bool C_ZipFile::IsNormal(char *i_szFullFileName)
+bool C_ZipFile::IsNormal(char *szFullFileName)
 {
-	int iIdx = FindFileIndexInCD(i_szFullFileName);
+	int iIdx = FindFileIndexInCD(szFullFileName);
 	if(iIdx>=0) {
 		bool bIsNorm = (m_pCDEntriesReadable[iIdx].ver&0xff00)==0x0300;
 		if(bIsNorm) bIsNorm = (m_pCDEntriesReadable[iIdx].ver_needed&0xff00)==0x0300;
@@ -440,11 +443,11 @@ bool C_ZipFile::IsNormal(char *i_szFullFileName)
 	return false;
 }
 
-bool C_ZipFile::IsDirectory(char *i_szFullFileName)
+bool C_ZipFile::IsDirectory(char *szFullFileName)
 {
-	int iIdx = FindFileIndexInCD(i_szFullFileName);
+	int iIdx = FindFileIndexInCD(szFullFileName);
 	if(iIdx>=0) {
-		bool bIsDir = i_szFullFileName[strlen(i_szFullFileName)-1] == '/'; //test that should cover all different flags
+		bool bIsDir = szFullFileName[strlen(szFullFileName)-1] == '/'; //test that should cover all different flags
 		//but in case it does not
 		if(!bIsDir) bIsDir = (m_pCDEntriesReadable[iIdx].ext_attrib&0x00000010)==0x00000010; //win
 		if(!bIsDir) bIsDir = (m_pCDEntriesReadable[iIdx].ext_attrib&0xffff0000)==0x41ed0000; //mac
@@ -453,9 +456,9 @@ bool C_ZipFile::IsDirectory(char *i_szFullFileName)
 	return false;
 }
 
-bool C_ZipFile::SetExecutable(char *i_szFullFileName)
+bool C_ZipFile::SetExecutable(char *szFullFileName)
 {
-	int iIdx = FindFileIndexInCD(i_szFullFileName);
+	int iIdx = FindFileIndexInCD(szFullFileName);
 	if(iIdx>=0) {
 		m_pCDEntriesReadable[iIdx].ver &= 0x00ff; //keep lower byte
 		m_pCDEntriesReadable[iIdx].ver |= 0x0300; //set unix
@@ -477,9 +480,9 @@ bool C_ZipFile::SetExecutable(char *i_szFullFileName)
 	return false;
 }
 
-bool C_ZipFile::SetNormal(char *i_szFullFileName)
+bool C_ZipFile::SetNormal(char *szFullFileName)
 {
-	int iIdx = FindFileIndexInCD(i_szFullFileName);
+	int iIdx = FindFileIndexInCD(szFullFileName);
 	if(iIdx>=0) {
 		m_pCDEntriesReadable[iIdx].ver &= 0x00ff; //keep lower byte
 		m_pCDEntriesReadable[iIdx].ver |= 0x0300; //set unix
@@ -501,9 +504,9 @@ bool C_ZipFile::SetNormal(char *i_szFullFileName)
 	return false;
 }
 
-bool C_ZipFile::SetDirectory(char *i_szFullFileName)
+bool C_ZipFile::SetDirectory(char *szFullFileName)
 {
-	int iIdx = FindFileIndexInCD(i_szFullFileName);
+	int iIdx = FindFileIndexInCD(szFullFileName);
 	if(iIdx>=0) {
 		m_pCDEntriesReadable[iIdx].ver &= 0x00ff; //keep lower byte
 		m_pCDEntriesReadable[iIdx].ver |= 0x0300; //set unix
@@ -525,23 +528,23 @@ bool C_ZipFile::SetDirectory(char *i_szFullFileName)
 	return false;
 }
 
-int C_ZipFile::FindFileIndexInCD(char *i_szFile)
+int C_ZipFile::FindFileIndexInCD(char *szFile)
 {
 	if(m_bOpenOK) {
 		for(int i=0; i<m_iNumFiles; i++) {
-			if(strcmp(m_szFilenames[i], i_szFile) ==0) return i;
+			if(strcmp(m_szFilenames[i], szFile) ==0) return i;
 		}
 	}
 	return -1;
 }
 
-void C_ZipFile::SwapToLittleEndian(void *i_pData, int i_iNumBytes)
+void C_ZipFile::SwapToLittleEndian(void * io_pData, int iNumBytes)
 {
 	//do nothing on intel (therefore commented)
-	/*uint8_t *dst = (uint8_t *)i_pData;
+	/*uint8_t *dst = (uint8_t *)io_pData;
 	uint8_t bytes[4];
-	memcpy(bytes, i_pData, i_iNumBytes);
-	switch(i_iNumBytes) {
+	memcpy(bytes, io_pData, iNumBytes);
+	switch(iNumBytes) {
 		case 4:
 			*dst++ = bytes[0]; *dst++ = bytes[1]; *dst++ = bytes[2]; *dst++ = bytes[3];
 			break;
@@ -551,13 +554,13 @@ void C_ZipFile::SwapToLittleEndian(void *i_pData, int i_iNumBytes)
 	}*/
 }
 
-void C_ZipFile::SwapFromLittleEndian(void *i_pData, int i_iNumBytes)
+void C_ZipFile::SwapFromLittleEndian(void *io_pData, int iNumBytes)
 {
 	//do nothing on intel (therefore commented)
-	/*uint8_t *dst = (uint8_t *)i_pData;
+	/*uint8_t *dst = (uint8_t *)io_pData;
 	uint8_t bytes[4];
-	memcpy(bytes, i_pData, i_iNumBytes);
-	switch(i_iNumBytes) {
+	memcpy(bytes, io_pData, iNumBytes);
+	switch(iNumBytes) {
 		case 4:
 			*dst++ = bytes[3]; *dst++ = bytes[2]; *dst++ = bytes[1]; *dst++ = bytes[0];
 			break;
@@ -569,23 +572,23 @@ void C_ZipFile::SwapFromLittleEndian(void *i_pData, int i_iNumBytes)
 
 /////////////
 
-bool FixZipFlags(char *i_szZipFile, char *i_szNewZipFile, char *i_szFileToFix)
+bool FixZipFlags(char *szZipFile, char *szNewZipFile, char *szFileToFix)
 {
 	bool bResult = false; //assume error
 
 	C_ZipFile *pclZip = new C_ZipFile();
 	//open zip
-	if(pclZip->Open(i_szZipFile)) {
+	if(pclZip->Open(szZipFile)) {
 		//change the given file to unix executable, other files and directories will
 		// be set to unix attributes as well.
-		if(!pclZip->SetExecutable(i_szFileToFix)) {
-			printf("error: could not set \"%s\" executable\n", i_szFileToFix);
+		if(!pclZip->SetExecutable(szFileToFix)) {
+			printf("error: could not set \"%s\" executable\n", szFileToFix);
 			goto out;
 		}
 
 		//save changed zip
-		if(!pclZip->Save(i_szNewZipFile)) {
-			printf("error: could not save output zip file (%s)\n", i_szNewZipFile);
+		if(!pclZip->Save(szNewZipFile)) {
+			printf("error: could not save output zip file (%s)\n", szNewZipFile);
 			goto out;
 		}
 		bResult = true;

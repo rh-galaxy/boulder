@@ -33,7 +33,7 @@ void C_FontGL::Free()
 	}
 }
 
-bool C_FontGL::Load(char *i_szFontname, int i_iFontHeight, int i_iThickness, bool i_bUnderLined, bool i_bItallic)
+bool C_FontGL::Load(char *szFontname, int iFontHeight, int iThickness, bool bUnderLined, bool bItallic)
 {
 	int i;
 	bool bResult = false;
@@ -44,20 +44,20 @@ bool C_FontGL::Load(char *i_szFontname, int i_iFontHeight, int i_iThickness, boo
 	HFONT hFont;     // Windows Font ID
 	HFONT hOldFont;  // Used For Good House Keeping
 	hFont = CreateFont(
-		i_iFontHeight,  // Height Of Font
+		iFontHeight,  // Height Of Font
 		0,              // Width Of Font
 		0,              // Angle Of Escapement
 		0,              // Orientation Angle
-		i_iThickness,   // Font Weight
-		i_bItallic,     // Italic
-		i_bUnderLined,  // Underline
+		iThickness,   // Font Weight
+		bItallic,     // Italic
+		bUnderLined,  // Underline
 		false,          // Strikeout
 		ANSI_CHARSET,   // Character Set Identifier
 		OUT_TT_PRECIS,  // Output Precision
 		CLIP_DEFAULT_PRECIS, // Clipping Precision
 		ANTIALIASED_QUALITY, // Output Quality
 		FF_DONTCARE|DEFAULT_PITCH, // Family And Pitch
-		i_szFontname);
+		szFontname);
 	if(hFont==NULL) goto error;
 
 	HDC hDC = m_pclGraph->GetWindowDC();
@@ -101,7 +101,7 @@ bool C_FontGL::Load(char *i_szFontname, int i_iFontHeight, int i_iThickness, boo
 	if(!pDisplay) goto error;
 
 	//load the font
-	pFontInfo = XLoadQueryFont(pDisplay, i_szFontname);
+	pFontInfo = XLoadQueryFont(pDisplay, szFontname);
 	if(!pFontInfo) goto error;
 
 	m_iBelowBaseline = 0; //?
@@ -120,7 +120,7 @@ bool C_FontGL::Load(char *i_szFontname, int i_iFontHeight, int i_iThickness, boo
 		m_aiWidthC[i] = 0;            //?
 	}
 	m_iTotalHeight = (pFontInfo->max_bounds.ascent-pFontInfo->min_bounds.ascent) + pFontInfo->max_bounds.descent; //?
-	m_iCharHeight = i_iFontHeight;                                                                                //?
+	m_iCharHeight = iFontHeight;                                                                                //?
 
 	XFreeFont(pDisplay, pFontInfo);
 	bResult = true;
@@ -137,15 +137,15 @@ bool C_FontGL::GetHeights(int *o_iChar, int *o_iTotal, int *o_BelowBaseline)
 	return (o_iChar || o_iTotal || m_iBelowBaseline);
 }
 
-int C_FontGL::GetWidth(const char *i_szFmt, ...)
+int C_FontGL::GetWidth(const char *szFmt, ...)
 {
 	va_list   stPList;
 	char      szText[512];
 
-	if(i_szFmt == NULL) return 0;
+	if(szFmt == NULL) return 0;
 
-	va_start(stPList, i_szFmt);
-	vsprintf(szText, i_szFmt, stPList);
+	va_start(stPList, szFmt);
+	vsprintf(szText, szFmt, stPList);
 	va_end(stPList);
 
 	int iWidth = 0;
@@ -158,31 +158,31 @@ int C_FontGL::GetWidth(const char *i_szFmt, ...)
 	return iWidth;
 }
 
-bool C_FontGL::GetCharWidths(const char i_cChar, int *o_iPreX, int *o_iCharX, int *o_iPostX)
+bool C_FontGL::GetCharWidths(const char cChar, int *o_iPreX, int *o_iCharX, int *o_iPostX)
 {
-	if(o_iPreX)  *o_iPreX  = m_aiWidthA[(unsigned char)i_cChar];
-	if(o_iCharX) *o_iCharX = m_aiWidthB[(unsigned char)i_cChar];
-	if(o_iPostX) *o_iPostX = m_aiWidthC[(unsigned char)i_cChar];
+	if(o_iPreX)  *o_iPreX  = m_aiWidthA[(unsigned char)cChar];
+	if(o_iCharX) *o_iCharX = m_aiWidthB[(unsigned char)cChar];
+	if(o_iPostX) *o_iPostX = m_aiWidthC[(unsigned char)cChar];
 	return true;
 }
 
-void C_FontGL::Print(int i_iX, int i_iY, const char *i_szFmt, ...)
+void C_FontGL::Print(int iX, int iY, const char *szFmt, ...)
 {
 	va_list   stPList;
 	char      szText[512];
 	int       iBase = CHARS_BASE;
 
-	if(i_szFmt == NULL) return;
+	if(szFmt == NULL) return;
 
-	va_start(stPList, i_szFmt);
-	vsprintf(szText, i_szFmt, stPList);
+	va_start(stPList, szFmt);
+	vsprintf(szText, szFmt, stPList);
 	va_end(stPList);
 
 	GLboolean bTexture = glIsEnabled(GL_TEXTURE_2D);
 	if(bTexture) glDisable(GL_TEXTURE_2D);
 
 	glColor4fv(&m_stColor.r);
-	glRasterPos2f((float)i_iX, (float)(m_pclGraph->GetModeHeight()-i_iY));
+	glRasterPos2f((float)iX, (float)(m_pclGraph->GetModeHeight()-iY));
 
 	glPushAttrib(GL_LIST_BIT);
 

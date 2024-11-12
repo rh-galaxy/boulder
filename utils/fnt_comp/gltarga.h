@@ -9,13 +9,13 @@
 class C_TargaImg
 {
 public:
-	static C_Image *Load(const char *i_szFilename, const char *i_szResname);
-	static C_Image *Load(void *i_pTargaData);
+	static C_Image *Load(const char *szFilename, const char *szResname);
+	static C_Image *Load(void *pTargaData);
 
-	static bool Save(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip = false);
-	static bool SaveCompressed(const char *i_szFilename, C_Image *i_pclSrc, bool i_bFlip = false);
+	static bool Save(const char *szFilename, C_Image *pclSrc, bool bFlip = false);
+	static bool SaveCompressed(const char *szFilename, C_Image *pclSrc, bool bFlip = false);
 private:
-	static C_Image *LoadPrivate(const char *i_szFilename, const char *i_szResname, void *i_pTargaData);
+	static C_Image *LoadPrivate(const char *szFilename, const char *szResname, void *pTargaData);
 };
 
 #endif
