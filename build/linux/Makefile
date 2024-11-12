@@ -105,14 +105,14 @@ clean:
 	rm -f ../../utils/fnt_comp/fnt_comp
 	rm -f ../../utils/img_cut/img_cut
 
-#########
-#private
-
 install:
 	mkdir -p $(EXE_PATH)
 	cp ./boulder   $(EXE_PATH)
 	cp ./mapeditor  $(EXE_PATH)
 	cp $(LD_LIBSDL) $(EXE_PATH)
+
+#########
+#private
 
 boulder: $(BOULDER_OBJECTS)
 	$(CC) -o ./boulder $(BOULDER_OBJECTS) $(LDFLAGS_PLAIN) $(LDFLAGS_GFX)
