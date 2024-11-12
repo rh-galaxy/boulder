@@ -84,7 +84,7 @@ FNT_COMP_OBJECTS = ../../other/fnt_comp/fnt_comp.o ../../src/common/fileresource
 
 #########
 #targets
-all: boulder mapeditor install
+all: boulder mapeditor
 
 utils: ../../utils/res_comp/res_comp ../../utils/fnt_comp/fnt_comp ../../utils/img_cut/img_cut
 
