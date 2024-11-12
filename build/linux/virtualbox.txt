@@ -61,6 +61,7 @@ In the terminal stand in the folder you want to checkout to
 > unzip boulder_1.01_src.zip
 > cd boulder2/build/linux
 > make all
+> make install
 > cd ../../exe/linux_<os_type> (Replace <os_type> with your installed linux type, either x86 or x64)
 > ./boulder2
 
