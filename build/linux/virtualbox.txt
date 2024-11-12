@@ -47,10 +47,9 @@ To access shared folders from 3 do
 
 restart
 
-5. Install the required libs to build
+(5. Install the required libs to build)
 
 Open a terminal
-> sudo apt-get install subversion
 > (sudo apt-get install libglu1-mesa-dev mesa-common-dev)  (for fnt_comp utility)
 > (sudo apt-get install libsdl2-2.0-0)
 > (sudo apt-get install libsdl2-dev)
