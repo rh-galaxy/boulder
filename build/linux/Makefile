@@ -34,7 +34,9 @@ ifeq ($(TARGET_OS),Linux)
   LDFLAGS_GFX += -lSDL2
  endif
  LDFLAGS_GFX_GL = -lGL -L/usr/X11R6/lib -lX11
- CFLAGS = $(COMPILERFLAGS) -I../../src/common -I../../src/boulder -I../../src/graph -I../../ext_include/pa -I../../ext_include/sdl
+ LOCAL_CFLAGS = $(CFLAGS) $(COMPILERFLAGS) -I../../src/common -I../../src/boulder -I../../src/graph -I../../ext_include/pa -I../../ext_include/sdl
+ LOCAL_CPPFLAGS = $(CPPFLAGS)
+ LOCAL_CXXFLAGS = $(CXXFLAGS) $(COMPILERFLAGS) -I../../src/common -I../../src/boulder -I../../src/graph -I../../ext_include/pa -I../../ext_include/sdl
 endif
 
 #########
@@ -67,16 +69,16 @@ FNT_COMP_OBJECTS = ../../other/fnt_comp/fnt_comp.o ../../src/common/fileresource
 # fix so that a new or renamed .h file will cause a rebuild
 # and finally fix paths in the .d file
 %.o: %.cpp
-	$(CC) -c $(CFLAGS) $*.cpp -o $*.o
-	$(CC) -MM $(CFLAGS) $*.cpp > $*.d
+	$(CC) -c $(LOCAL_CPPFLAGS) $(LOCAL_CXXFLAGS) $*.cpp -o $*.o
+	$(CC) -MM $(LOCAL_CPPFLAGS) $(LOCAL_CXXFLAGS) $*.cpp > $*.d
 	@mv -f $*.d $*.d.tmp
 	@sed -e 's|.*:|$*.o:|' < $*.d.tmp > $*.d
 	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
 	@rm -f $*.d.tmp
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) $*.c -o $*.o
-	$(CC) -MM $(CFLAGS) $*.c > $*.d
+	$(CC) -c $(LOCAL_CPPFLAGS) $(LOCAL_CFLAGS) $*.c -o $*.o
+	$(CC) -MM $(LOCAL_CPPFLAGS) $(LOCAL_CFLAGS) $*.c > $*.d
 	@mv -f $*.d $*.d.tmp
 	@sed -e 's|.*:|$*.o:|' < $*.d.tmp > $*.d
 	@sed -e 's/.*://' -e 's/\\$$//' < $*.d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*.d
