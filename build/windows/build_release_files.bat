@@ -187,7 +187,13 @@ xcopy ..\..\ext_include\sdl\*.*     "%path_source_plain%\ext_include\sdl\"
 REM /lib
 REM removed
 REM /exe
-REM removed
+md "%path_source%\exe"
+md "%path_source%\exe\data"
+md "%path_source%\exe\linux_x64"
+xcopy ..\..\exe\*.txt "%path_source%\exe\"
+xcopy ..\..\exe\data\* "%path_source%\exe\data\"
+xcopy ..\..\exe\linux_x64\*.desktop "%path_source%\exe\linux_x64\"
+xcopy ..\..\exe\linux_x64\*.png "%path_source%\exe\linux_x64\"
 REM /original_gfx
 REM removed
 REM /build
