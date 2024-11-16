@@ -2,6 +2,6 @@
 Name=Boulder editor
 Comment=Level editor for Boulder
 Exec=mapeditor
-Icon=mapeditor
+Icon=mapeditor.png
 Type=Application
-Categories=Graphics
+Categories=Graphics;

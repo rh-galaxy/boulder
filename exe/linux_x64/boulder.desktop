@@ -2,6 +2,6 @@
 Name=Boulder
 Comment=Collect diamonds and reach the exit
 Exec=boulder
-Icon=boulder
+Icon=boulder.png
 Type=Application
-Categories=Graphics
+Categories=Graphics;
