@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Boulder
+Comment=Collect diamonds and reach the exit
+Exec=boulder
+Icon=boulder
+Type=Application
+Categories=Graphics

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Boulder editor
+Comment=Level editor for Boulder
+Exec=mapeditor
+Icon=mapeditor
+Type=Application
+Categories=Graphics
