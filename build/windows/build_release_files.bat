@@ -189,8 +189,7 @@ REM removed
 REM /exe
 REM removed
 REM /original_gfx
-md "%path_source_plain%\original_gfx"
-xcopy ..\..\original_gfx\* "%path_source_plain%\original_gfx\"
+REM removed
 REM /build
 md "%path_source_plain%\build"
 md "%path_source_plain%\build\linux"
