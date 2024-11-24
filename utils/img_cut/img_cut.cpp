@@ -170,28 +170,28 @@ int main(int argc, char *argv[])
 			int iInOffsetY = (j*g_iOutSizeY)%g_iInSizeY;
 
 			int iOutOffsetX = 0, iOutOffsetY = 0;
-			C_Image *pclOutImg = new C_Image(g_iOutSizeX, g_iOutSizeY, _DEFAULT);
-			pclOutImg->FillWithAbsoluteColor(NULL, 0);
+			C_Image *pOutImg = new C_Image(g_iOutSizeX, g_iOutSizeY, _DEFAULT);
+			pOutImg->FillWithAbsoluteColor(NULL, 0);
 			for(j2=iStartInImgY; j2<g_iInNumY; j2++) {
 				iOutOffsetX = 0;
 				iInOffsetX = iStartInOffsetX;
 				for(i2=iStartInImgX; i2<g_iInNumX; i2++) { //read and paste each input used for this output
 					//read inimage
 					GetInputName(i2, j2, szInName);
-					C_Image *pclInImg = new C_Image(szInName, NULL, &bResult, _DEFAULT);
+					C_Image *pInImg = new C_Image(szInName, NULL, &bResult, _DEFAULT);
 					if(!bResult) {
 						printf("error: could not read input image (%s)\n", szInName);
 						return false;
 					}
 
-					//put pclInImg to pclOutImg at iOutOffset (and clipped to border of pclOutImg)
+					//put pInImg to pOutImg at iOutOffset (and clipped to border of pOutImg)
 					S_Rect stSrcRect = {iInOffsetX, iInOffsetY, g_iInSizeX-iInOffsetX, g_iInSizeY-iInOffsetY};
 					int iSpaceX = g_iOutSizeX-iOutOffsetX;
 					int iSpaceY = g_iOutSizeY-iOutOffsetY;
 					if(iSpaceX<stSrcRect.width) stSrcRect.width = iSpaceX;
 					if(iSpaceY<stSrcRect.height) stSrcRect.height = iSpaceY;
-					pclOutImg->Blt2(pclInImg, &stSrcRect, iOutOffsetX, iOutOffsetY);
-					delete pclInImg;
+					pOutImg->Blt2(pInImg, &stSrcRect, iOutOffsetX, iOutOffsetY);
+					delete pInImg;
 
 					iOutOffsetX+=stSrcRect.width;
 					if(iOutOffsetX>=g_iOutSizeX) break;
@@ -204,8 +204,8 @@ int main(int argc, char *argv[])
 
 			//save image
 			GetOutputName(i, j, szOutName);
-			C_TargaImg::SaveCompressed(szOutName, pclOutImg);
-			delete pclOutImg;
+			C_TargaImg::SaveCompressed(szOutName, pOutImg);
+			delete pOutImg;
 		}
 	}
 

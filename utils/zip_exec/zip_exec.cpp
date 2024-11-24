@@ -276,12 +276,12 @@ bool C_ZipFile::Open(char *szZipFile)
 {
 	Free();
 	bool bResult = false;
-	C_Resource *pclRes = new C_Resource();
-	if(pclRes->SetFilename(szZipFile)) {
+	C_Resource *pRes = new C_Resource();
+	if(pRes->SetFilename(szZipFile)) {
 		int iLen, iExtraOffset;
-		uint32_t iSize = pclRes->GetSize();
+		uint32_t iSize = pRes->GetSize();
 		m_pZipMem = new uint8_t[iSize];
-		pclRes->Read(m_pZipMem, iSize); //read the entire file to memory
+		pRes->Read(m_pZipMem, iSize); //read the entire file to memory
 
 		//scan for CD marker (50 4b 05 06)
 		bool bFound = false;
@@ -381,7 +381,7 @@ bool C_ZipFile::Open(char *szZipFile)
 		bResult = true;
 	}
 out:
-	delete pclRes;
+	delete pRes;
 	return bResult;
 }
 
@@ -390,10 +390,10 @@ bool C_ZipFile::Save(char *szZipFile)
 	bool bResult = false;
 	if(!m_bOpenOK) return false;
 
-	C_Resource *pclFile = new C_Resource();
-	pclFile->SetMode(false);
-	if(pclFile->SetFilename(szZipFile)) {
-		bResult = pclFile->Write(m_pZipMem, m_stCDEndReadable.cd_start); //write all up until the CD (same as source)
+	C_Resource *pFile = new C_Resource();
+	pFile->SetMode(false);
+	if(pFile->SetFilename(szZipFile)) {
+		bResult = pFile->Write(m_pZipMem, m_stCDEndReadable.cd_start); //write all up until the CD (same as source)
 		//CD entries
 		for(int i=0; i<m_iNumFiles; i++) {
 			//set unix normal for all non executable files.
@@ -403,17 +403,17 @@ bool C_ZipFile::Save(char *szZipFile)
 			if(IsDirectory(m_szFilenames[i])) SetDirectory(m_szFilenames[i]);
 			else if(!IsExecutable(m_szFilenames[i])) SetNormal(m_szFilenames[i]);
 
-			if(bResult) bResult = pclFile->Write(&m_pCDEntries[i], sizeof(S_CentralDirectoryEntry));
-			if(bResult) bResult = pclFile->Write(m_szFilenames[i], m_pCDEntriesReadable[i].name_len);
-			if(bResult) bResult = pclFile->Write(m_szExtra[i], m_pCDEntriesReadable[i].extra_len);
-			if(bResult) bResult = pclFile->Write(m_szComments[i], m_pCDEntriesReadable[i].comment_len);
+			if(bResult) bResult = pFile->Write(&m_pCDEntries[i], sizeof(S_CentralDirectoryEntry));
+			if(bResult) bResult = pFile->Write(m_szFilenames[i], m_pCDEntriesReadable[i].name_len);
+			if(bResult) bResult = pFile->Write(m_szExtra[i], m_pCDEntriesReadable[i].extra_len);
+			if(bResult) bResult = pFile->Write(m_szComments[i], m_pCDEntriesReadable[i].comment_len);
 			if(!bResult) break;
 		}
 		//CD end + zip comment
-		if(bResult) bResult = pclFile->Write(&m_stCDEnd, sizeof(m_stCDEnd));
-		if(bResult) bResult = pclFile->Write(m_szZipComment, m_stCDEndReadable.comment_len);
+		if(bResult) bResult = pFile->Write(&m_stCDEnd, sizeof(m_stCDEnd));
+		if(bResult) bResult = pFile->Write(m_szZipComment, m_stCDEndReadable.comment_len);
 	}
-	delete pclFile; //closes file
+	delete pFile; //closes file
 
 	return bResult;
 }
@@ -576,18 +576,18 @@ bool FixZipFlags(char *szZipFile, char *szNewZipFile, char *szFileToFix)
 {
 	bool bResult = false; //assume error
 
-	C_ZipFile *pclZip = new C_ZipFile();
+	C_ZipFile *pZip = new C_ZipFile();
 	//open zip
-	if(pclZip->Open(szZipFile)) {
+	if(pZip->Open(szZipFile)) {
 		//change the given file to unix executable, other files and directories will
 		// be set to unix attributes as well.
-		if(!pclZip->SetExecutable(szFileToFix)) {
+		if(!pZip->SetExecutable(szFileToFix)) {
 			printf("error: could not set \"%s\" executable\n", szFileToFix);
 			goto out;
 		}
 
 		//save changed zip
-		if(!pclZip->Save(szNewZipFile)) {
+		if(!pZip->Save(szNewZipFile)) {
 			printf("error: could not save output zip file (%s)\n", szNewZipFile);
 			goto out;
 		}
@@ -595,7 +595,7 @@ bool FixZipFlags(char *szZipFile, char *szNewZipFile, char *szFileToFix)
 	}
 
 out:
-	delete pclZip;
+	delete pZip;
 	return bResult;
 }
 

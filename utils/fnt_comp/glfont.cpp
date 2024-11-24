@@ -17,7 +17,7 @@
 C_FontGL::C_FontGL()
 {
 	m_hListBase = 0;
-	m_pclGraph = C_GraphWrapperGL::GetGraphWrapperObject();
+	m_pGraph = C_GraphWrapperGL::GetGraphWrapperObject();
 	m_stColor = S_FCOLORMAKE(1.0f, 1.0f, 1.0f, 1.0f); //white
 }
 
@@ -60,7 +60,7 @@ bool C_FontGL::Load(char *szFontname, int iFontHeight, int iThickness, bool bUnd
 		szFontname);
 	if(hFont==NULL) goto error;
 
-	HDC hDC = m_pclGraph->GetWindowDC();
+	HDC hDC = m_pGraph->GetWindowDC();
 	hOldFont = (HFONT)SelectObject(hDC, hFont);  // Selects The Font We Want
 
 	TEXTMETRIC stTM;
@@ -97,7 +97,7 @@ bool C_FontGL::Load(char *szFontname, int iFontHeight, int iThickness, bool bUnd
 	int iFirst, iLast;
 
 	//need an X Display before calling any Xlib routines
-	pDisplay = m_pclGraph->GetDisplay();
+	pDisplay = m_pGraph->GetDisplay();
 	if(!pDisplay) goto error;
 
 	//load the font
@@ -182,7 +182,7 @@ void C_FontGL::Print(int iX, int iY, const char *szFmt, ...)
 	if(bTexture) glDisable(GL_TEXTURE_2D);
 
 	glColor4fv(&m_stColor.r);
-	glRasterPos2f((float)iX, (float)(m_pclGraph->GetModeHeight()-iY));
+	glRasterPos2f((float)iX, (float)(m_pGraph->GetModeHeight()-iY));
 
 	glPushAttrib(GL_LIST_BIT);
 

@@ -37,7 +37,7 @@ C_Image *C_TargaImg::Load(const char *szFilename, const char *szResname)
 C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, void *pTargaData)
 {
 	S_TargaHeader stHeader;                    //the header
-	C_Image       *pclImg;                     //the image to fill
+	C_Image       *pImg;                       //the image to fill
 
 	uint8_t       aiImgPal[1024];
 	uint8_t       aiTgaPal[768];               //temporary pal
@@ -50,7 +50,7 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 	uint8_t       *pFilebuf = NULL;            //buffer for the tga-file-data
 	uint8_t       *pFilebufCpy;                //temporary pointer for step through
 	bool          bDelmem = true;              //delete file-data-mem? (false for user mem)
-	C_Resource    *pclResource = NULL;
+	C_Resource    *pResource = NULL;
 
 	bool          bCompressed = false;         //guess uncompressed (raw)
 	uint32_t      iBytesPerPixel;              //number of bytes per pixel (1,2,3,4)
@@ -59,9 +59,9 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 	int           iPixelfmt, iLineBytes;
 
 	if(szFilename || szResname) {
-		pclResource = new C_Resource();
-		pclResource->SetFilename(szFilename, szResname);
-		if(!pclResource->Read(&stHeader, sizeof(S_TargaHeader))) goto error; //read header
+		pResource = new C_Resource();
+		pResource->SetFilename(szFilename, szResname);
+		if(!pResource->Read(&stHeader, sizeof(S_TargaHeader))) goto error; //read header
 	} else {
 		if(!pTargaData) goto error;
 		pFilebufCpy = pFilebuf = (uint8_t*)pTargaData;
@@ -75,14 +75,14 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 	if(stHeader.colmap_type>1 || iBytesPerPixel<1 || iBytesPerPixel>4 ||
 		(stHeader.img_descriptor>>6)) goto error;
 	//skip any id-field
-	if(stHeader.id_length) pclResource->Seek(stHeader.id_length, SEEK_CUR);
+	if(stHeader.id_length) pResource->Seek(stHeader.id_length, SEEK_CUR);
 
 	//create the destination image
 	iWidth = stHeader.width;
 	iHeight = stHeader.height;
 	iPixelfmt = iBytesPerPixel;
 	if(iBytesPerPixel == 2) iPixelfmt = _BGR555;
-	pclImg = new C_Image(stHeader.width, stHeader.height, iPixelfmt);
+	pImg = new C_Image(stHeader.width, stHeader.height, iPixelfmt);
 	//^can the pixelformat be something else?
 
 	//check if the targa is compressed (with RLE)
@@ -96,13 +96,13 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 			piPalDst = aiImgPal;
 			piPalSrc = aiTgaPal;
 			if(stHeader.colmap_entrysize != 24) goto error;
-			pclResource->Read(aiTgaPal, stHeader.colmap_length*3);
+			pResource->Read(aiTgaPal, stHeader.colmap_length*3);
 			for(i=0; i<256; i++) {
 				piPalDst[2] = *piPalSrc++; piPalDst[1] = *piPalSrc++;
 				piPalDst[0] = *piPalSrc++; //piPalDst[3] = 0;
 				piPalDst += 4;
 			}
-			pclImg->SetPal(aiImgPal);
+			pImg->SetPal(aiImgPal);
 			break;
 		case 3:  //create own palette if greyscale
 			piPalDst = aiImgPal;
@@ -110,22 +110,22 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 				*piPalDst++ = (uint8_t)i; *piPalDst++ = (uint8_t)i;
 				*piPalDst++ = (uint8_t)i; *piPalDst++ = 0;
 			}
-			pclImg->SetPal(aiImgPal);
+			pImg->SetPal(aiImgPal);
 			break;
 	}
 
 	//if compressed then read file to mem
-	if(bCompressed && pclResource) {
-		int iSize = pclResource->GetSize() -
+	if(bCompressed && pResource) {
+		int iSize = pResource->GetSize() -
 			(stHeader.colmap_length*3 + stHeader.id_length + 18);
 		pFilebuf = new uint8_t[iSize]; //get tempmem
-		if(!pclResource->Read(pFilebuf, iSize)) goto error;
+		if(!pResource->Read(pFilebuf, iSize)) goto error;
    }
 
 	//check if image is stored upside down
 	pFilebufCpy = pFilebuf;       //source if compressed
-	pclImg->GetBufferMemory(&pDstPos, NULL);
-	pclImg->GetLineSizeInfo(NULL, &iLineBytes, NULL);
+	pImg->GetBufferMemory(&pDstPos, NULL);
+	pImg->GetLineSizeInfo(NULL, &iLineBytes, NULL);
 	if((stHeader.img_descriptor & 0x20)==0) {
 		pDstPos += iLineBytes * (iHeight - 1);
 		iDstInc = -iLineBytes;
@@ -160,8 +160,8 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 			pFilebufCpy += iSrcPos;
 		} else {
 			int iLinelen = iWidth * iBytesPerPixel;
-			if(pclResource) {
-				if(!pclResource->Read(pDstPos, iLinelen)) goto error;
+			if(pResource) {
+				if(!pResource->Read(pDstPos, iLinelen)) goto error;
 			} else {
 				memcpy(pDstPos, pFilebufCpy, iLinelen);
 				pFilebufCpy += iLinelen;
@@ -171,34 +171,34 @@ C_Image *C_TargaImg::LoadPrivate(const char *szFilename, const char *szResname, 
 		pDstPos += iDstInc;
 	}
 	if(bDelmem) delete[] pFilebuf;
-	delete pclResource;
+	delete pResource;
 
-	return pclImg;         //success (or NULL)
+	return pImg;         //success (or NULL)
 error:
 	if(bDelmem) delete[] pFilebuf;
-	delete pclResource;
+	delete pResource;
 	return NULL;        //faliure
 }
 
-bool C_TargaImg::Save(const char *szFilename, C_Image *pclSrc, bool bFlip)
+bool C_TargaImg::Save(const char *szFilename, C_Image *pSrc, bool bFlip)
 {
 	S_TargaHeader stHeader;
 	uint8_t       aiPal[768];
-	C_Image       *pclImg = NULL; //if conversion, keep source image
+	C_Image       *pImg = NULL; //if conversion, keep source image
 	int           iWidth, iHeight, iPixelfmt;
 	int           iWidthBytes, iLineBytes, iResult;
 
-	if(!pclSrc) return false; //no image?
+	if(!pSrc) return false; //no image?
 
 	//convert imageformat if not same...
-	pclSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
+	pSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
 	switch(iPixelfmt & 0x0f) {
 		case 2: iPixelfmt = _BGR555;   break;
 		case 3: iPixelfmt = _BGR888;   break;
 		case 4: iPixelfmt = _BGRA8888; break;
 	}
 	C_Converter *pConv = new C_Converter(iPixelfmt);
-	pConv->Convert(pclSrc, &pclImg, &iResult);
+	pConv->Convert(pSrc, &pImg, &iResult);
 	delete pConv;
 	if(!iResult) return false; //error converting
 
@@ -210,7 +210,7 @@ bool C_TargaImg::Save(const char *szFilename, C_Image *pclSrc, bool bFlip)
 	stHeader.img_typecode = stHeader.bitsperpixel>8 ? 2 : 1;
 
 	uint8_t *pMemToReadFrom, *pPalSrc;
-	pclImg->GetBufferMemory(&pMemToReadFrom, &pPalSrc);
+	pImg->GetBufferMemory(&pMemToReadFrom, &pPalSrc);
 
 	if(stHeader.img_typecode == 1) { //palette
 		stHeader.colmap_entrysize = 24;
@@ -226,23 +226,23 @@ bool C_TargaImg::Save(const char *szFilename, C_Image *pclSrc, bool bFlip)
 		}
 	}
 
-	C_Resource *pclFile = new C_Resource();
-	pclFile->SetMode(false);
-	bool bOK = pclFile->SetFilename(szFilename);
-	if(bOK) bOK = pclFile->Write(&stHeader, sizeof(stHeader)); //write header
+	C_Resource *pFile = new C_Resource();
+	pFile->SetMode(false);
+	bool bOK = pFile->SetFilename(szFilename);
+	if(bOK) bOK = pFile->Write(&stHeader, sizeof(stHeader)); //write header
 	if(stHeader.img_typecode == 1) {
-		if(bOK) bOK = pclFile->Write(&aiPal, 768);             //if pal: write it
+		if(bOK) bOK = pFile->Write(&aiPal, 768);             //if pal: write it
 	}
 
 	//write imagedata
-	pclImg->GetLineSizeInfo(&iWidthBytes, &iLineBytes, NULL);
+	pImg->GetLineSizeInfo(&iWidthBytes, &iLineBytes, NULL);
 	for(int y=0; y<iHeight; y++) {
 		if(!bOK) break;
-		bOK = pclFile->Write(pMemToReadFrom, iWidthBytes);
+		bOK = pFile->Write(pMemToReadFrom, iWidthBytes);
 		pMemToReadFrom += iLineBytes;
 	}
-	delete pclFile; //closes file
-	delete pclImg;
+	delete pFile; //closes file
+	delete pImg;
 	return bOK;
 }
 
@@ -267,25 +267,25 @@ bool C_TargaImg::Save(const char *szFilename, C_Image *pclSrc, bool bFlip)
 	} \
 }
 
-bool C_TargaImg::SaveCompressed(const char *szFilename, C_Image *pclSrc, bool bFlip)
+bool C_TargaImg::SaveCompressed(const char *szFilename, C_Image *pSrc, bool bFlip)
 {
 	S_TargaHeader stHeader;
 	uint8_t       aiPal[768];
-	C_Image       *pclImg = NULL; //if conversion, keep source image
+	C_Image       *pImg = NULL; //if conversion, keep source image
 	int           iWidth, iHeight, iPixelfmt;
 	int           iWidthBytes, iLineBytes, iResult;
 
-	if(!pclSrc) return false; //no image?
+	if(!pSrc) return false; //no image?
 
 	//convert imageformat if not same...
-	pclSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
+	pSrc->GetInfo(&iWidth, &iHeight, &iPixelfmt);
 	switch(iPixelfmt & 0x0f) {
 		case 2: iPixelfmt = _BGR555;   break;
 		case 3: iPixelfmt = _BGR888;   break;
 		case 4: iPixelfmt = _BGRA8888; break;
 	}
 	C_Converter *pConv = new C_Converter(iPixelfmt);
-	pConv->Convert(pclSrc, &pclImg, &iResult);
+	pConv->Convert(pSrc, &pImg, &iResult);
 	delete pConv;
 	if(!iResult) return false; //error converting
 
@@ -297,7 +297,7 @@ bool C_TargaImg::SaveCompressed(const char *szFilename, C_Image *pclSrc, bool bF
 	stHeader.img_typecode = stHeader.bitsperpixel>8 ? 10 : 9; //compressed
 
 	uint8_t *pSrcBuf, *pPalSrc;
-	pclImg->GetBufferMemory(&pSrcBuf, &pPalSrc);
+	pImg->GetBufferMemory(&pSrcBuf, &pPalSrc);
 
 	if(stHeader.img_typecode == 9) { //palette
 		stHeader.colmap_entrysize = 24;
@@ -318,7 +318,7 @@ bool C_TargaImg::SaveCompressed(const char *szFilename, C_Image *pclSrc, bool bF
 	if(stHeader.img_typecode == 9) fwrite(&aiPal, 768, 1, pFile); //if pal: write it
 
 	//create imagedata
-	pclImg->GetLineSizeInfo(&iWidthBytes, &iLineBytes, NULL);
+	pImg->GetLineSizeInfo(&iWidthBytes, &iLineBytes, NULL);
 
 	uint8_t *pDstBuf, *pDstBufCpy;
 	pDstBufCpy = pDstBuf = new uint8_t[iWidthBytes * iHeight]; //get tempmem
@@ -372,6 +372,6 @@ bool C_TargaImg::SaveCompressed(const char *szFilename, C_Image *pclSrc, bool bF
 
 	delete[] pDstBuf;
 	fclose(pFile);
-	delete pclImg;
+	delete pImg;
 	return true;
 }

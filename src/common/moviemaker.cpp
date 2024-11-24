@@ -14,24 +14,24 @@
 THREAD_RET C_MovieMaker::WorkThread(void *pMovieMaker)
 {
 	char szFilename[MAX_PATH];
-	C_Image *pclCurrent;
+	C_Image *pCurrent;
 
 	C_MovieMaker *pThis = (C_MovieMaker*)pMovieMaker;
 
 	bool bEmpty = true;
 	while(!pThis->m_bDone || !bEmpty) {
-		pclCurrent = NULL;
+		pCurrent = NULL;
 		pThis->m_pMutex->Enter();
 		if(!pThis->m_clImageQueue.empty()) {
-			pclCurrent = pThis->m_clImageQueue[0];
+			pCurrent = pThis->m_clImageQueue[0];
 			pThis->m_clImageQueue.pop_front();
 		}
 		pThis->m_pMutex->Leave();
-		if(pclCurrent) {
+		if(pCurrent) {
 			bEmpty = false;
 			sprintf(szFilename, "%s/frame%06d.tga", pThis->m_szSavePath, pThis->m_iFrameNr++);
-			C_TargaImg::SaveCompressed(szFilename, pclCurrent, true);
-			delete pclCurrent;
+			C_TargaImg::SaveCompressed(szFilename, pCurrent, true);
+			delete pCurrent;
 		} else {
 			mssleep(5);
 			bEmpty = true;
@@ -52,17 +52,17 @@ C_MovieMaker::C_MovieMaker(char *szSavePath, C_GraphWrapper *pGraph, C_Sound *pS
 	C_Resource::CreateDir(m_szSavePath);
 
 	m_bDone = false;
-	m_pclGraph = pGraph;
-	m_pclSound = pSound;
+	m_pGraph = pGraph;
+	m_pSound = pSound;
 	m_pMutex = new C_Mutex();
 	m_pThread = new C_Thread(WorkThread, this);
-	if(m_pclSound) {
+	if(m_pSound) {
 		char szFilename[MAX_PATH];
 		sprintf(szFilename, "%s/audio.wav", m_szSavePath);
-		m_pclSound->Init(szFilename);
+		m_pSound->Init(szFilename);
 	}
 	m_bStopNeeded = false;
-	m_pclTimer = new C_Timer();
+	m_pTimer = new C_Timer();
 	m_iSleepTime = -1;
 	m_iFrameNrBase = m_iFrameNr;
 	m_dFPS = 30.0;
@@ -70,19 +70,19 @@ C_MovieMaker::C_MovieMaker(char *szSavePath, C_GraphWrapper *pGraph, C_Sound *pS
 
 C_MovieMaker::~C_MovieMaker()
 {
-	if(m_pclSound) m_pclSound->Init(NULL);
+	if(m_pSound) m_pSound->Init(NULL);
 	m_bDone = true;
 	m_pThread->WaitForThreadExit();
 	delete m_pThread;
 	delete m_pMutex;
 	if(m_bStopNeeded) Stop();
-	delete m_pclTimer;
+	delete m_pTimer;
 }
 
 void C_MovieMaker::NextFrame(int iNumTimesSameFrame)
 {
 	//get screen
-	C_Image *pImageObj = m_pclGraph->GetRenderedAsImage();
+	C_Image *pImageObj = m_pGraph->GetRenderedAsImage();
 	//enqueue image to be saved
 	m_pMutex->Enter();
 	if(iNumTimesSameFrame>1) {
@@ -102,7 +102,7 @@ void C_MovieMaker::FrameRateLimit(double dFPS)
 	if(m_iSleepTime==-1) m_iSleepTime = (int)(1000/dFPS)-10; //guess some initial value
 	//limit frame rate to that wanted by sleeping
 	//how accurate this frame rate limiter is depends on the resolution of sleep which depends on the computer and os
-	double dFrameTime = m_pclTimer->GetInterval(); //last loop time (including previous sleep)
+	double dFrameTime = m_pTimer->GetInterval(); //last loop time (including previous sleep)
 	double dWantedTime = 1000.0/dFPS;
 	if(dWantedTime>dFrameTime+1 && m_iSleepTime<500) m_iSleepTime++;
 	else if(dWantedTime<dFrameTime-1 && m_iSleepTime>0) m_iSleepTime--;
@@ -122,26 +122,26 @@ void C_MovieMaker::Stop()
 	FILE *pFile = NULL;
 	//get length of audio to generate FPS for perfect sound sync
 	double dFPS = m_dFPS;
-	if(m_pclSound) {
+	if(m_pSound) {
 		sprintf(szSaveFile, "%s/audio.wav", m_szSavePath);
-		C_Resource *pclAudio = new C_Resource();
-		pclAudio->SetFilename(szSaveFile);
-		uint32_t iAvgBytesPerSec, iAudioDataSize = pclAudio->GetSize()-44;
-		pclAudio->Seek(28, SEEK_SET);
-		pclAudio->Read(&iAvgBytesPerSec, sizeof(iAvgBytesPerSec));
-		delete pclAudio;
+		C_Resource *pAudio = new C_Resource();
+		pAudio->SetFilename(szSaveFile);
+		uint32_t iAvgBytesPerSec, iAudioDataSize = pAudio->GetSize()-44;
+		pAudio->Seek(28, SEEK_SET);
+		pAudio->Read(&iAvgBytesPerSec, sizeof(iAvgBytesPerSec));
+		delete pAudio;
 		double dAudioLengthSec = (double)iAudioDataSize/(double)iAvgBytesPerSec;
 		if(dAudioLengthSec>0.0) dFPS = (m_iFrameNr-m_iFrameNrBase)/dAudioLengthSec;
 	}
 	//save command file (works with mencoder 4.2.5)
 	sprintf(szSaveFile, "%s/make_video.bat", m_szSavePath);
-	if(m_pclSound) strcpy(szSound, "-audiofile audio.wav -oac mp3lame");
+	if(m_pSound) strcpy(szSound, "-audiofile audio.wav -oac mp3lame");
 	else strcpy(szSound, "-nosound");
 	pFile = fopen(szSaveFile, "wt");
 	if(pFile) {
 		fprintf(pFile, "REM file to generate divx or mp42 avi file from all .tga files in the directory together with audio.wav\r\n");
 		fprintf(pFile, "pushd \"%%~dp0\"\r\n");
-		int iBitrate = (int)(((50 * dFPS * m_pclGraph->GetModeWidth() * m_pclGraph->GetModeHeight()) / 256) *1.90);
+		int iBitrate = (int)(((50 * dFPS * m_pGraph->GetModeWidth() * m_pGraph->GetModeHeight()) / 256) *1.90);
 		fprintf(pFile, "REM divx mpeg4:\r\n");
 		fprintf(pFile, "mencoder mf://*.tga -mf fps=%.5lf:type=tga -MC 0 %s -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:vhq:trell:autoaspect:vbitrate=%d -o output.avi\r\n", dFPS, szSound, iBitrate);
 		fprintf(pFile, "REM msmpeg4: (plays in windows without codecpack)\r\n");

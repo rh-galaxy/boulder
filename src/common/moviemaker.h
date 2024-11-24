@@ -20,8 +20,8 @@ public:
 	void Stop(); //writes a .bat file to generate movie
 private:
 	static THREAD_RET WorkThread(void *pMovieMaker);
-	C_GraphWrapper *m_pclGraph;
-	C_Sound        *m_pclSound;
+	C_GraphWrapper *m_pGraph;
+	C_Sound        *m_pSound;
 	std::deque<C_Image*>  m_clImageQueue;
 	C_Mutex  *m_pMutex;
 	C_Thread *m_pThread;
@@ -33,7 +33,7 @@ private:
 	int m_iFrameNrBase;
 	double m_dFPS;
 
-	C_Timer *m_pclTimer;
+	C_Timer *m_pTimer;
 	int m_iSleepTime;
 };
 

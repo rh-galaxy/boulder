@@ -96,7 +96,7 @@ private:
 
 	void Swap(C_Image *pSrc);
 
-	C_Converter *m_pclConverter;
+	C_Converter *m_pConverter;
 
 #ifdef _IMAGE_USE_OPENGL
 	void ExpandToOpenGLCompatibleDim();

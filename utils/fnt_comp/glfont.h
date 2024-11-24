@@ -21,7 +21,7 @@ public:
 	void Print(int iX, int iY, const char *szFmt, ...);
 	bool GetCharWidths(const char cChar, int *o_iPreX, int *o_iCharX, int *o_iPostX);
 private:
-	C_GraphWrapperGL *m_pclGraph;
+	C_GraphWrapperGL *m_pGraph;
 
 	//properties
 	S_FColor m_stColor;

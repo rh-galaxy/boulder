@@ -10,7 +10,7 @@
 #pragma comment (lib, "opengl32.lib")
 #endif
 
-C_GraphWrapperGL *C_GraphWrapperGL::s_pclTheGLGraph = NULL;
+C_GraphWrapperGL *C_GraphWrapperGL::s_pTheGLGraph = NULL;
 
 #ifdef WIN32
 C_GraphWrapperGL::C_GraphWrapperGL(WNDPROC i_pWndProc, HICON i_hIcon)
@@ -35,14 +35,14 @@ C_GraphWrapperGL::C_GraphWrapperGL()
 	m_szErrorMsg[0] = 0;
 
 	strcpy(m_szWndTitle, "OpenGL UNTITLED");
-	s_pclTheGLGraph = this;
+	s_pTheGLGraph = this;
 
 	SetBltColor(NULL);
 }
 
 C_GraphWrapperGL::~C_GraphWrapperGL()
 {
-	s_pclTheGLGraph = NULL;
+	s_pTheGLGraph = NULL;
 
 	int i, iSize = (int)m_clTextureList.size();
 	for(i=0; i<iSize; i++) {
@@ -521,17 +521,17 @@ void C_GraphWrapperGL::ReloadTextures()
 	}
 }
 
-bool C_GraphWrapperGL::LoadTexture(GLuint i_hDstTexture, C_Image *i_pclSrcImg)
+bool C_GraphWrapperGL::LoadTexture(GLuint i_hDstTexture, C_Image *i_pSrcImg)
 {
 	int iWidth, iHeight, iPixelFmt;
 	uint8_t *pBuf;
 
-	if(i_pclSrcImg) {
-		i_pclSrcImg->ExpandToOpenGLCompatibleDim();
-		i_pclSrcImg->GetInfo(NULL, NULL, &iPixelFmt);
-		iWidth  = i_pclSrcImg->m_iGLTextureW;
-		iHeight = i_pclSrcImg->m_iGLTextureH;
-		i_pclSrcImg->GetBufferMemory(&pBuf, NULL);
+	if(i_pSrcImg) {
+		i_pSrcImg->ExpandToOpenGLCompatibleDim();
+		i_pSrcImg->GetInfo(NULL, NULL, &iPixelFmt);
+		iWidth  = i_pSrcImg->m_iGLTextureW;
+		iHeight = i_pSrcImg->m_iGLTextureH;
+		i_pSrcImg->GetBufferMemory(&pBuf, NULL);
 
 		glBindTexture(GL_TEXTURE_2D, i_hDstTexture);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -554,13 +554,13 @@ bool C_GraphWrapperGL::LoadTexture(GLuint i_hDstTexture, C_Image *i_pclSrcImg)
 bool C_GraphWrapperGL::LoadTexture(GLuint i_hDstTexture, char* i_szFilename, char* i_szResname)
 {
 	bool bResult;
-	C_Image *pclImg;
+	C_Image *pImg;
 	char *szResname = i_szResname;
 
 	if(i_szResname && i_szResname[0]==0) szResname = NULL;
-	pclImg = new C_Image(i_szFilename, szResname, &bResult, _RGBA8888);
-	if(bResult) bResult = LoadTexture(i_hDstTexture, pclImg);
-	delete pclImg;
+	pImg = new C_Image(i_szFilename, szResname, &bResult, _RGBA8888);
+	if(bResult) bResult = LoadTexture(i_hDstTexture, pImg);
+	delete pImg;
 
 	return bResult;
 }
@@ -601,12 +601,12 @@ bool C_GraphWrapperGL::FreeTexture(GLuint i_hTexture)
 	return bReturn;
 }
 
-GLuint C_GraphWrapperGL::LoadTextureAbs(C_Image *i_pclSrcImg)
+GLuint C_GraphWrapperGL::LoadTextureAbs(C_Image *i_pSrcImg)
 {
 	GLuint hTexture;
 	glGenTextures(1, &hTexture);
 
-	if(!LoadTexture(hTexture, i_pclSrcImg)) {
+	if(!LoadTexture(hTexture, i_pSrcImg)) {
 		glDeleteTextures(1, &hTexture);
 		hTexture = 0;
 	}
@@ -741,28 +741,28 @@ bool C_GraphWrapperGL::Blt(GLuint i_hTexture, int i_iW, int i_iH, S_Rect *i_pstS
 	return true;
 }
 
-bool C_GraphWrapperGL::Blt(C_Image *i_pclSrcImg, S_Rect *i_pstSrcRect, int i_iX, int i_iY, bool i_bTransparent)
+bool C_GraphWrapperGL::Blt(C_Image *i_pSrcImg, S_Rect *i_pstSrcRect, int i_iX, int i_iY, bool i_bTransparent)
 {
 	bool bResult = false;
 
-	if(!i_pclSrcImg) return false;
-	if(i_pclSrcImg->m_hTexture==0) i_pclSrcImg->m_hTexture = LoadTextureAbs(i_pclSrcImg);
+	if(!i_pSrcImg) return false;
+	if(i_pSrcImg->m_hTexture==0) i_pSrcImg->m_hTexture = LoadTextureAbs(i_pSrcImg);
 
-	if(i_pclSrcImg->m_hTexture) {
-		bResult = Blt(i_pclSrcImg->m_hTexture, i_pclSrcImg->m_iWidth, i_pclSrcImg->m_iHeight,
+	if(i_pSrcImg->m_hTexture) {
+		bResult = Blt(i_pSrcImg->m_hTexture, i_pSrcImg->m_iWidth, i_pSrcImg->m_iHeight,
 			i_pstSrcRect, i_iX, i_iY, i_bTransparent);
 	}
 	return bResult;
 }
 
-bool C_GraphWrapperGL::Blt(C_Image *i_pclSrcImg, S_Rect *i_pstSrcRect, S_Rect *i_pstDstRect, bool i_bTransparent)
+bool C_GraphWrapperGL::Blt(C_Image *i_pSrcImg, S_Rect *i_pstSrcRect, S_Rect *i_pstDstRect, bool i_bTransparent)
 {
 	bool bResult = false;
 
-	if(i_pclSrcImg->m_hTexture==0) i_pclSrcImg->m_hTexture = LoadTextureAbs(i_pclSrcImg);
+	if(i_pSrcImg->m_hTexture==0) i_pSrcImg->m_hTexture = LoadTextureAbs(i_pSrcImg);
 
-	if(i_pclSrcImg->m_hTexture) {
-		bResult = Blt(i_pclSrcImg->m_hTexture, i_pclSrcImg->m_iWidth, i_pclSrcImg->m_iHeight,
+	if(i_pSrcImg->m_hTexture) {
+		bResult = Blt(i_pSrcImg->m_hTexture, i_pSrcImg->m_iWidth, i_pSrcImg->m_iHeight,
 			i_pstSrcRect, i_pstDstRect, i_bTransparent);
 	}
 	return bResult;

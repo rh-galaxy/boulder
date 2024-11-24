@@ -33,7 +33,7 @@ C_Image::C_Image(int iWidth, int iHeight, int iPixelfmt, uint8_t* pBuffer)
 	m_iLineSize = iWidth * m_iPixelSize; //usermemory images are not aligned
 	m_iBufSize = m_iLineSize * iHeight;
 
-	m_pclConverter = new C_Converter(m_iPixelfmt);
+	m_pConverter = new C_Converter(m_iPixelfmt);
 }
 
 C_Image::C_Image(int iWidth, int iHeight, int iPixelfmt, bool* o_bResult)
@@ -42,7 +42,7 @@ C_Image::C_Image(int iWidth, int iHeight, int iPixelfmt, bool* o_bResult)
 	m_hTexture = 0;
 #endif
 
-	m_pclConverter = new C_Converter(iPixelfmt);
+	m_pConverter = new C_Converter(iPixelfmt);
 
 	m_pBuf.u8ptr = m_pPal = NULL;
 	m_bUsermem = false;
@@ -66,7 +66,7 @@ C_Image::C_Image(C_Image *pSrcImg, bool *o_bResult)
 	m_hTexture = 0;
 #endif
 
-	m_pclConverter = new C_Converter(s_iDefaultPixelfmt);
+	m_pConverter = new C_Converter(s_iDefaultPixelfmt);
 
 	if(o_bResult) *o_bResult = false; //default fail
 	m_pBuf.u8ptr = m_pPal = NULL;
@@ -76,7 +76,7 @@ C_Image::C_Image(C_Image *pSrcImg, bool *o_bResult)
 	if(pSrcImg == NULL) return;
 
 	pSrcImg->GetInfo(&m_iWidth, &m_iHeight, &m_iPixelfmt);
-	m_pclConverter->SetDstPixelFormat(m_iPixelfmt);
+	m_pConverter->SetDstPixelFormat(m_iPixelfmt);
 	m_iPixelSize = m_iPixelfmt & 0x0f;
 	m_iColorkey = pSrcImg->m_iColorkey;
 
@@ -102,18 +102,18 @@ C_Image::C_Image(const char *szFilename, const char *szResname, bool *o_bResult,
 	m_hTexture = 0;
 #endif
 
-	m_pclConverter = new C_Converter(iPixelfmt);
+	m_pConverter = new C_Converter(iPixelfmt);
 
 	if(o_bResult) *o_bResult = false;
 	m_pBuf.u8ptr = m_pPal = NULL;
 	m_bUsermem = false;
 	m_iColorkey = 0;
 
-	C_TargaImg *pclTga = new C_TargaImg(); //only support tga in this special version for fnt_comp gl
-	C_Image *pclDst = pclTga->Load(szFilename, szResname);
-	delete pclTga;
-	if(!pclDst) return;
-	Swap(pclDst);
+	C_TargaImg *pTga = new C_TargaImg(); //only support tga in this special version for fnt_comp gl
+	C_Image *pDst = pTga->Load(szFilename, szResname);
+	delete pTga;
+	if(!pDst) return;
+	Swap(pDst);
 	if(!ConvertFormat(iPixelfmt)) return;
 
 	if(o_bResult) *o_bResult = true;
@@ -128,7 +128,7 @@ C_Image::~C_Image()
 	if(!m_bUsermem) delete[] m_pBuf.u8ptr;
 	delete[] m_pPal;
 
-	delete m_pclConverter;
+	delete m_pConverter;
 }
 
 void C_Image::GetInfo(int *o_iWidth, int *o_iHeight, int *o_iPixelfmt) const
@@ -215,8 +215,8 @@ void C_Image::FillWithAbsoluteColor(S_Rect *stArea, uint32_t iColor)
 
 void C_Image::FillWithRGBColor(S_Rect *stArea, S_Color *stColor)
 {
-	m_pclConverter->SetDstPixelFormat(m_iPixelfmt);
-	uint32_t iOutcolor = m_pclConverter->GetAbsoluteColor(stColor);
+	m_pConverter->SetDstPixelFormat(m_iPixelfmt);
+	uint32_t iOutcolor = m_pConverter->GetAbsoluteColor(stColor);
 	FillWithAbsoluteColor(stArea, iOutcolor);
 }
 
@@ -233,16 +233,16 @@ S_Color C_Image::GetPixelRGB(int x, int y)
 		case 4: iIncolor = b.u32ptr[x]; break;
 	}
 
-	m_pclConverter->SetDstPixelFormat(m_iPixelfmt);
-	m_pclConverter->GetColor(iIncolor, &stColor);
+	m_pConverter->SetDstPixelFormat(m_iPixelfmt);
+	m_pConverter->GetColor(iIncolor, &stColor);
 
 	return stColor;
 }
 
 void C_Image::SetTransparentColor(S_Color *stColor)
 {
-	m_pclConverter->SetDstPixelFormat(m_iPixelfmt);
-	m_iColorkey = m_pclConverter->GetAbsoluteColor(stColor);
+	m_pConverter->SetDstPixelFormat(m_iPixelfmt);
+	m_iColorkey = m_pConverter->GetAbsoluteColor(stColor);
 }
 
 bool C_Image::ConvertFormat(int iPixelfmt)
@@ -251,12 +251,12 @@ bool C_Image::ConvertFormat(int iPixelfmt)
 	if(iPixelfmt == m_iPixelfmt) return true; //same format
 
 	int result;
-	C_Image *pclDst = NULL;
-	m_pclConverter->SetDstPixelFormat(iPixelfmt);
-	m_pclConverter->Convert(this, &pclDst, &result);
+	C_Image *pDst = NULL;
+	m_pConverter->SetDstPixelFormat(iPixelfmt);
+	m_pConverter->Convert(this, &pDst, &result);
 
 	if(!result) return false;
-	Swap(pclDst);
+	Swap(pDst);
 
 	return true;
 }
@@ -280,14 +280,14 @@ void C_Image::Swap(C_Image *pSrc)
 	delete pSrc;
 }
 
-bool C_Image::Blt2(C_Image *pclSrcImg, S_Rect *pstSrcRect, int iX, int iY, uint32_t *piTranspCol)
+bool C_Image::Blt2(C_Image *pSrcImg, S_Rect *pstSrcRect, int iX, int iY, uint32_t *piTranspCol)
 {
 	int iX2 = 0, iY2 = 0, iSrcW, iSrcH, iSrcBytes;
 	int iDstBytes;
 
-	if(!pclSrcImg) return false;
+	if(!pSrcImg) return false;
 
-	pclSrcImg->GetInfo(&iSrcW, &iSrcH, &iSrcBytes);
+	pSrcImg->GetInfo(&iSrcW, &iSrcH, &iSrcBytes);
 	GetInfo(NULL, NULL, &iDstBytes);
 	if(iSrcBytes!=iDstBytes) return false;
 
@@ -303,10 +303,10 @@ bool C_Image::Blt2(C_Image *pclSrcImg, S_Rect *pstSrcRect, int iX, int iY, uint3
 
 	uint8_t *pSrc, *pDst;
 	int srcline, dstline;
-	pclSrcImg->GetBufferMemory(&pSrc, NULL);
+	pSrcImg->GetBufferMemory(&pSrc, NULL);
 	GetBufferMemory(&pDst, NULL);
 
-	pclSrcImg->GetLineSizeInfo(NULL, &srcline, NULL);
+	pSrcImg->GetLineSizeInfo(NULL, &srcline, NULL);
 	GetLineSizeInfo(NULL, &dstline, NULL);
 
 	int x, y;
@@ -370,12 +370,12 @@ void C_Image::ExpandToOpenGLCompatibleDim()
 		}
 	}
 
-	C_Image *pclNewImage = new C_Image(iW, iH, m_iPixelfmt);
-	pclNewImage->FillWithAbsoluteColor(NULL, 0);
+	C_Image *pNewImage = new C_Image(iW, iH, m_iPixelfmt);
+	pNewImage->FillWithAbsoluteColor(NULL, 0);
 
-	pclNewImage->Blt2(this, NULL, 0,0);
+	pNewImage->Blt2(this, NULL, 0,0);
 
-	Swap(pclNewImage);
+	Swap(pNewImage);
 
 	m_iGLTextureW = m_iWidth;
 	m_iGLTextureH = m_iHeight;

@@ -22,8 +22,8 @@ bool CreateResource(const char *szExclude, const char *szDest)
 {
 	bool bOK, bResult = false;
 	S_Item stItem;
-	C_ItemList *pclItems = new C_ItemList();
-	C_Resource *pclFile = new C_Resource();
+	C_ItemList *pItems = new C_ItemList();
+	C_Resource *pFile = new C_Resource();
 	uint32_t iFileStart, iHeaderLen = 4;
 	int i, iSize;
 	char szFilename[MAX_PATH];
@@ -46,32 +46,32 @@ bool CreateResource(const char *szExclude, const char *szDest)
 		stItem.iNameLength = (uint8_t)iLen;
 		strncpy(stItem.szName, szFilename, sizeof(stItem.szName));
 		stItem.iFileStart = 0; //not known yet
-		if(!pclFile->SetFilename(szFilename)) continue; //skip directories (and files that cannot be opened)
-		stItem.iFileLength = pclFile->GetSize();
+		if(!pFile->SetFilename(szFilename)) continue; //skip directories (and files that cannot be opened)
+		stItem.iFileLength = pFile->GetSize();
 		if(!stItem.iFileLength) {
 			printf("warning: skipping empty file (%s)\n", szFilename);
 			continue;
 		}
 		iHeaderLen += 1+stItem.iNameLength+sizeof(int)*2;
-		pclItems->push_back(stItem);
+		pItems->push_back(stItem);
 	}
 	C_Resource::FileSearchClose(hSearch);
 
 	//write header
-	pclFile->SetMode(false);
-	if(!pclFile->SetFilename(szDest)) {
+	pFile->SetMode(false);
+	if(!pFile->SetFilename(szDest)) {
 		printf("error: could not open destination (%s)\n", szDest);
 		goto error;
 	}
 	iFileStart = iHeaderLen;
-	iSize = (int)pclItems->size();
-	bOK = pclFile->Write(&iSize, sizeof(iSize));
+	iSize = (int)pItems->size();
+	bOK = pFile->Write(&iSize, sizeof(iSize));
 	for(i=0; i<iSize; i++) {
-		S_Item *pstItem = &(*pclItems)[i];
-		if(bOK) bOK = pclFile->Write(&pstItem->iNameLength, sizeof(pstItem->iNameLength));
-		if(bOK) bOK = pclFile->Write(pstItem->szName, pstItem->iNameLength);
-		if(bOK) bOK = pclFile->Write(&iFileStart, sizeof(iFileStart));
-		if(bOK) bOK = pclFile->Write(&pstItem->iFileLength, sizeof(pstItem->iFileLength));
+		S_Item *pstItem = &(*pItems)[i];
+		if(bOK) bOK = pFile->Write(&pstItem->iNameLength, sizeof(pstItem->iNameLength));
+		if(bOK) bOK = pFile->Write(pstItem->szName, pstItem->iNameLength);
+		if(bOK) bOK = pFile->Write(&iFileStart, sizeof(iFileStart));
+		if(bOK) bOK = pFile->Write(&pstItem->iFileLength, sizeof(pstItem->iFileLength));
 		iFileStart += pstItem->iFileLength;
 	}
 	if(!bOK) {
@@ -81,18 +81,18 @@ bool CreateResource(const char *szExclude, const char *szDest)
 
 	//write file entries
 	for(i=0; i<iSize; i++) {
-		S_Item *pstItem = &(*pclItems)[i];
-		C_Resource *pclFileSrc = new C_Resource();
-		pclFileSrc->SetFilename(pstItem->szName);
+		S_Item *pstItem = &(*pItems)[i];
+		C_Resource *pFileSrc = new C_Resource();
+		pFileSrc->SetFilename(pstItem->szName);
 		uint8_t *pData = new uint8_t[pstItem->iFileLength];
-		bOK = pclFileSrc->Read(pData, pstItem->iFileLength);
-		delete pclFileSrc;
+		bOK = pFileSrc->Read(pData, pstItem->iFileLength);
+		delete pFileSrc;
 		if(!bOK) {
 			printf("error: could not read source (%s)\n", pstItem->szName);
 			delete[] pData;
 			goto error;
 		}
-		bOK = pclFile->Write(pData, pstItem->iFileLength);
+		bOK = pFile->Write(pData, pstItem->iFileLength);
 		delete[] pData;
 		if(!bOK) {
 			printf("error: could not write to destination (%s)\n", szDest);
@@ -103,8 +103,8 @@ bool CreateResource(const char *szExclude, const char *szDest)
 	printf("\nresource created as: '%s'\n", szDest);
 	bResult = true;
 error:
-	delete pclFile; //closes the file
-	delete pclItems;
+	delete pFile; //closes the file
+	delete pItems;
 	return bResult;
 }
 

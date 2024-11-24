@@ -63,7 +63,7 @@ public:
 	int GetModeFmt() {return m_iPixelFmt;};
 
 	//control
-	static C_GraphWrapperGL *GetGraphWrapperObject() {return s_pclTheGLGraph;};
+	static C_GraphWrapperGL *GetGraphWrapperObject() {return s_pTheGLGraph;};
 	void Set2DOrthoProjectionMode();
 	void Set3DProjectionMode();
 	bool BeginScene(bool i_bClear = true); //should be run before any drawing/rendering-operations (every frame)
@@ -75,12 +75,12 @@ public:
 	bool FreeTexture(GLuint i_hTexture);
 	void ReloadTextures(); //reloads all textures from disk without changing the refcount (do this when the textures are lost because of graphmode switching)
 
-	static GLuint LoadTextureAbs(C_Image *i_pclSrcImg);
+	static GLuint LoadTextureAbs(C_Image *i_pSrcImg);
 	static void FreeTextureAbs(GLuint i_hTexture);
 
 	void SetBltColor(S_FColor *i_pstColor);
-	bool Blt(C_Image *i_pclSrcImg, S_Rect *i_pstSrcRect, int i_iX, int i_iY, bool i_bTransparent = false);
-	bool Blt(C_Image *i_pclSrcImg, S_Rect *i_pstSrcRect, S_Rect *i_pstDstRect, bool i_bTransparent = false);
+	bool Blt(C_Image *i_pSrcImg, S_Rect *i_pstSrcRect, int i_iX, int i_iY, bool i_bTransparent = false);
+	bool Blt(C_Image *i_pSrcImg, S_Rect *i_pstSrcRect, S_Rect *i_pstDstRect, bool i_bTransparent = false);
 	//renders a previously loaded texture modulated with the current glColor() onto screen
 	//the projection must be in ortho mode. i_iX, i_iY is the UPPER left corner.
 
@@ -121,7 +121,7 @@ private:
 #endif
 	char                  m_szWndTitle[200];
 
-	static C_GraphWrapperGL *s_pclTheGLGraph; //there can only be one GLGraph and this is it
+	static C_GraphWrapperGL *s_pTheGLGraph; //there can only be one GLGraph and this is it
 
 	//info and state var
 	int  m_iWidth, m_iHeight, m_iPixelFmt; //see image.h
@@ -132,7 +132,7 @@ private:
 	bool InitGL();
 	bool KillGLWindow();
 
-	static bool LoadTexture(GLuint i_hDstTexture, C_Image *i_pclSrcImg);
+	static bool LoadTexture(GLuint i_hDstTexture, C_Image *i_pSrcImg);
 	bool LoadTexture(GLuint i_hDstTexture, char *i_szFilename, char *i_szResname);
 	C_TextureList m_clTextureList;
 
