@@ -1,0 +1,34 @@
+
+Setup for building and running the game on Raspberry Pi (64bit)
+
+
+1. Raspberry Pi OS 64-bit (RPi 4 or 5)
+
+https://www.raspberrypi.com/software/
+
+2. Install the required libs to build
+
+https://github.com/libsdl-org/SDL/releases/tag/release-2.30.9
+download source zip
+
+Open a terminal 
+> unzip SDL-release-2.30.9.zip
+> cd SDL-release-2.30.9
+> sudo -s
+> ./configure; make; make install
+> exit
+
+3. Check out and build
+
+https://github.com/rh-galaxy/boulder/releases/tag/v1.01
+download source zip
+
+Open a terminal 
+> unzip boulder-1.01.zip
+> cd boulder-1.01/build/linux
+> make all
+> make install
+> cd ../../exe/linux
+> ./boulder
+
+RPI 5 works fine with good performance
