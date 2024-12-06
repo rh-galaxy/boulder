@@ -127,8 +127,12 @@ C_GUI::C_GUI()
 C_GUI::~C_GUI()
 {
 	int i, iSize = (int)m_pObj->size();
-	for(i=0; i<iSize; i++) {
-		delete (*m_pObj)[i].pListEl; //will be null if not used
+	for (i = 0; i < iSize; i++) {
+		S_GUIObject* pstO = &(*m_pObj)[i];
+		if (pstO) { //will be null if not used
+			C_GUIListElements *pList = pstO->pListEl;
+			delete pList;
+		}
 	}
 	delete m_pObj;
 	delete m_pTimer;

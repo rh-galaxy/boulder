@@ -166,10 +166,10 @@ C_Game::C_Game()
 	m_pDlg0->LoadTemplate(szPath, NULL, 100, 100);
 
 	//find official levels
+	int i = 0;
 	C_Resource* pRes = new C_Resource();
 	void* pSearchH = pRes->FileSearchOpen(C_Global::szDataPath, "*.map");
 	char szFile[MAX_PATH];
-	int i = 0;
 	while (pRes->FileSearchNext(pSearchH, szFile, sizeof(szFile))) {
 		char* pDot = strrchr(szFile, '.');
 		if (pDot) *pDot = 0;
@@ -208,6 +208,7 @@ C_Game::C_Game()
 		pstEl->pIcon = 0;
 		strcpy(pstEl->szText[0], szTemp);
 		m_pDlg0->ListAddElement(2, pstEl);
+		delete pstEl; //it is copied
 	}
 
 	//find unofficial levels and add
@@ -225,6 +226,7 @@ C_Game::C_Game()
 		pstEl->pIcon = 0;
 		strcpy(pstEl->szText[0], szFile);
 		m_pDlg0->ListAddElement(2, pstEl);
+		delete pstEl; //it is copied
 
 		if (iSortedPos >= MAXLEVELS) break;
 	}
@@ -369,6 +371,9 @@ void C_Game::FreeAll()
 
 	delete m_pDlg0;    m_pDlg0 = NULL;
 	delete m_pMiniMap; m_pMiniMap = NULL;
+
+	delete m_pTimer;   m_pTimer = NULL;
+	delete m_pCurHighscore; m_pCurHighscore = NULL;
 }
 
 void C_Game::OpenSelectedHiscore(int iMarkedPlace)
@@ -380,6 +385,7 @@ void C_Game::OpenSelectedHiscore(int iMarkedPlace)
 	S_GUIListEl* pEl = m_pDlg0->ListGetElementById(2, iEl);
 	if (pEl) {
 		sprintf(szFile, "%s/%s.hiscore", C_Global::szAppDataPath, pEl->szText[0]);
+		delete m_pCurHighscore;
 		m_pCurHighscore = new C_HighScoreList(szFile, true);
 		S_HighScore stScoreList;
 		m_pCurHighscore->GetAsData(&stScoreList);
@@ -393,6 +399,7 @@ void C_Game::OpenSelectedHiscore(int iMarkedPlace)
 			sprintf(pstEl->szText[1], "%d.%d", stScoreList.iScore[i] / 10, (abs(stScoreList.iScore[i]) % 10) ); //score 0.0
 			sprintf(pstEl->szText[2], "%d.%02d s", stScoreList.iTime[i] / 1000, (abs(stScoreList.iTime[i]) % 1000) / 10); //display 0.00 s
 			m_pDlg0->ListAddElement(1, pstEl);
+			delete pstEl; //it is copied
 		}
 		//show a new score as selected, else nothing selected
 		if (iMarkedPlace >= 0) {
@@ -421,9 +428,10 @@ bool C_Game::OpenSelectedMap()
 		m_pMap->GetMapParameters(&m_iDiamonds, &m_iTime, &m_iScore);
 		m_pDlg0->SetText(7, m_pMap->GetMapDescription());
 		m_pTimer->Reset();
+
+		m_pMiniMap = m_pMap->GetMiniMap(3);
 	}
 
-	m_pMiniMap = m_pMap->GetMiniMap(3);
 	return true;
 }
 bool C_Game::ReOpen()
