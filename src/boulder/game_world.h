@@ -83,8 +83,8 @@ private:
 	//object functions
 	C_Object* GetObject(int x, int y);
 	C_Object* GetFirstObject(int x, int y);
-	void SetObject(int x, int y, int iObjNumber, int iObjParam = 0);
-	void SetObject(int x, int y, C_Object* pNewObject);
+	C_Object* SetObject(int x, int y, int iObjNumber, int iObjParam = 0);
+	C_Object* SetObject(int x, int y, C_Object* pNewObject);
 	C_Object* MoveObject(int x, int y, int x2, int y2, bool bDelayNextMove = false); //returns prev obj at destination (inserts OBJ_EMPTY at source)
 	C_Object* ReplaceObject(int x, int y, C_Object* pNewObject); //returns prev obj at destination
 

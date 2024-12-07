@@ -17,7 +17,7 @@ static const float PANNING_RANGE = 370.0f; //maxdistance sound is played in both
 C_Control* C_Object::s_pControl = NULL;
 C_Sound* C_Object::s_pSound = NULL;
 
-int* C_Object::s_aiObjProperties;
+int C_Object::s_aiObjProperties[TILENUMBERLIMIT];
 
 S_Point C_Object::s_stListenerPos;
 double C_Object::s_dTimeSinceDiamondHitSound;
@@ -47,7 +47,6 @@ void C_Object::InitObjPropertiesOnce(C_Sound* pSound, C_Control* pControl)
 	s_pSound = pSound;
 	s_pControl = pControl;
 
-	s_aiObjProperties = new int[TILENUMBERLIMIT];
 	s_aiObjProperties[OBJ_EMPTY] = OBJ_EMPTY_TYPE;
 	s_aiObjProperties[OBJ_WALL] = OBJ_WALL_TYPE;
 	s_aiObjProperties[OBJ_EARTH] = OBJ_EARTH_TYPE;

@@ -146,7 +146,7 @@ private:
 	void MoveEnemy3(int iLastAnim);
 	void MoveEnemy4(int iLastAnim);
 
-	static int* s_aiObjProperties;
+	static int s_aiObjProperties[TILENUMBERLIMIT];
 	C_TileHandler* m_pTileHandler;
 
 	C_World* m_pParent;

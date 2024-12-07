@@ -121,6 +121,7 @@ C_Game::C_Game()
 	m_pFont = NULL;
 	m_pFont2 = NULL;
 	m_pMiniMap = NULL;
+	m_pCurHighscore = NULL;
 
 	m_dMusicTimer = 49000;
 	m_pMusicChannel2 = m_pMusicChannel1 = NULL;

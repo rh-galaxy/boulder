@@ -203,6 +203,7 @@ void C_Sound::Free()
 	m_bThreadDone = true;
 	if (m_pUpdateThread != NULL) {
 		m_pUpdateThread->WaitForThreadExit();
+		delete m_pUpdateThread;
 		m_pUpdateThread = NULL;
 	}
 
@@ -336,6 +337,7 @@ void* C_Sound::Play(int iIndex, float fVolume, float fPanning, bool bLooping, in
 			if (m_pSounds[iIndex].iType == 1) {
 				//sound data is ogg
 				int iUsed, iError;
+				//memory leak 512+64 bytes, despite using stb_vorbis_close() later
 				m_pChannels[i].pVStream = stb_vorbis_open_pushdata(m_pSounds[iIndex].pOggData,
 					m_pSounds[iIndex].iLength, &iUsed, &iError, NULL);
 				m_pChannels[i].iInPos = iUsed;

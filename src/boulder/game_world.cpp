@@ -153,16 +153,18 @@ C_Object* C_World::GetFirstObject(int x, int y)
 	return (pPrevObject != NULL) ? pPrevObject : pObject;
 }
 
-void C_World::SetObject(int x, int y, C_Object* pNewObject)
+C_Object* C_World::SetObject(int x, int y, C_Object* pNewObject)
 {
-	if (m_pGrid[y][x]) m_pGrid[y][x]->m_bToBeDeleted = true;
+	C_Object* pObject = m_pGrid[y][x];
+	if (pObject) pObject->m_bToBeDeleted = true;
 	m_pGrid[y][x] = pNewObject;
 	pNewObject->SetWorldAndPos(this, x, y);
+	return pObject;
 }
-void C_World::SetObject(int x, int y, int iObjNumber, int iObjParam)
+C_Object* C_World::SetObject(int x, int y, int iObjNumber, int iObjParam)
 {
 	C_Object* pObject = new C_Object(m_pTileHandler, iObjNumber, iObjParam, 0);
-	SetObject(x, y, pObject);
+	return SetObject(x, y, pObject);
 }
 
 C_Object* C_World::MoveObject(int x, int y, int x2, int y2, bool bDelayNextMove) //empty space is inserted at old pos, object at new pos is removed from grid and returned
