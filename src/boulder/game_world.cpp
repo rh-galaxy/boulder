@@ -566,14 +566,15 @@ void C_World::ActionExplode3x3(int x, int y)
 				}
 				if (oObj->m_iObjNumber != OBJ_EXPLOSION) {
 					C_Object* oObjExplosion = new C_Object(m_pTileHandler, OBJ_EXPLOSION, OBJ_EMPTY, 0);
-					//delete oObjExplosion->m_pNextObj; //hack since we want to set next obj here
 					if (oObj->m_pNextObj != NULL) {
+						delete oObjExplosion->m_pNextObj;
 						oObjExplosion->m_pNextObj = oObj->m_pNextObj;
 					}
 					else if (oObj->m_iObjNumber == OBJ_BOMB && (iAreaX != x || iAreaY != y)) {
+						delete oObjExplosion->m_pNextObj;
 						oObjExplosion->m_pNextObj = new C_Object(m_pTileHandler, OBJ_BOMB, 0, 0);
 					}
-					SetObject(iAreaX, iAreaY, oObjExplosion);
+					delete SetObject(iAreaX, iAreaY, oObjExplosion);
 				}
 				else {
 					oObj->m_bAnimFinished = false;
@@ -619,7 +620,7 @@ void C_World::ActionExplodeInto(int x, int y, int iExplodeInto, int iExplosionAn
 				//all objects are destroyed and replaced within the area, including enemies
 				C_Object* oObjExplosion = new C_Object(m_pTileHandler, OBJ_EXPLOSION, iNewObjNum, iNewObjParam);
 				oObjExplosion->m_pNextObj->m_iDefaultAnim = iExplosionAnim;
-				SetObject(iAreaX, iAreaY, oObjExplosion);
+				delete SetObject(iAreaX, iAreaY, oObjExplosion);
 			}
 			else iObjIndex++;
 		}
