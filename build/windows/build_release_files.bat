@@ -16,7 +16,7 @@ REM path setup
 
 REM normally the 2 lines below is the only things that need editing
 SET sevenzip="c:\Program Files\7-Zip\7z.exe"
-SET ver=1.01
+SET ver=1.02
 
 SET dest_path=..\..\release_packages
 SET path_source=%dest_path%\boulder_%ver%_src
@@ -109,7 +109,7 @@ md "%path_source%\build\mac\MapEditor\MapEditor\en.lproj"
 md "%path_source%\build\mac\MapEditor\MapEditor.xcodeproj"
 md "%path_source%\build\windows"
 xcopy ..\..\build\linux\Makefile "%path_source%\build\linux\"
-xcopy ..\..\build\linux\virtualbox.txt "%path_source%\build\linux\"
+xcopy ..\..\build\linux\*.txt "%path_source%\build\linux\"
 xcopy ..\..\build\mac\Boulder\*.icns "%path_source%\build\mac\Boulder\"
 xcopy ..\..\build\mac\Boulder\Boulder\Boulder-Info.plist "%path_source%\build\mac\Boulder\Boulder\"
 xcopy ..\..\build\mac\Boulder\Boulder.xcodeproj\project.pbxproj "%path_source%\build\mac\Boulder\Boulder.xcodeproj\"
@@ -187,13 +187,13 @@ xcopy ..\..\ext_include\sdl\*.*     "%path_source_plain%\ext_include\sdl\"
 REM /lib
 REM removed
 REM /exe
-md "%path_source%\exe"
-md "%path_source%\exe\data"
-md "%path_source%\exe\linux_x64"
-xcopy ..\..\exe\*.txt "%path_source%\exe\"
-xcopy ..\..\exe\data\* "%path_source%\exe\data\"
-xcopy ..\..\exe\linux_x64\*.desktop "%path_source%\exe\linux_x64\"
-xcopy ..\..\exe\linux_x64\*.png "%path_source%\exe\linux_x64\"
+md "%path_source_plain%\exe"
+md "%path_source_plain%\exe\data"
+md "%path_source_plain%\exe\linux_x64"
+xcopy ..\..\exe\*.txt "%path_source_plain%\exe\"
+xcopy ..\..\exe\data\* "%path_source_plain%\exe\data\"
+xcopy ..\..\exe\linux_x64\*.desktop "%path_source_plain%\exe\linux_x64\"
+xcopy ..\..\exe\linux_x64\*.png "%path_source_plain%\exe\linux_x64\"
 REM /original_gfx
 REM removed
 REM /build
@@ -211,7 +211,7 @@ md "%path_source_plain%\build\mac\MapEditor\MapEditor\en.lproj"
 md "%path_source_plain%\build\mac\MapEditor\MapEditor.xcodeproj"
 md "%path_source_plain%\build\windows"
 xcopy ..\..\build\linux\Makefile "%path_source_plain%\build\linux\"
-xcopy ..\..\build\linux\virtualbox.txt "%path_source_plain%\build\linux\"
+xcopy ..\..\build\linux\*.txt "%path_source_plain%\build\linux\"
 xcopy ..\..\build\mac\Boulder\*.icns "%path_source_plain%\build\mac\Boulder\"
 xcopy ..\..\build\mac\Boulder\Boulder\Boulder-Info.plist "%path_source_plain%\build\mac\Boulder\Boulder\"
 xcopy ..\..\build\mac\Boulder\Boulder.xcodeproj\project.pbxproj "%path_source_plain%\build\mac\Boulder\Boulder.xcodeproj\"

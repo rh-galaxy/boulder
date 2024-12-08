@@ -869,6 +869,7 @@ int C_Object::Update(double dTime)
 							m_pParent->m_iScore += 500; //finnished bonus
 							//move into exit, player will be deleted when the anim is finnished
 							m_pParent->ActionMoveAndDestroyBoth(m_iWorldPosX, m_iWorldPosY, iX, iY, iAnimation, ANIM_CURRENTANIMNORESET, ANIM_EXPLOSION_SNAP);
+							/**/return 0;
 						}
 						else if (iDestObjNum == OBJ_DOOR || iDestObjNum == OBJ_DOOR_GREY) {
 							if ((m_pParent->m_iDoorKeys & (1 << pDestObj->m_iObjParam)) != 0) { //player has the right key and can move through the door if the way is free
@@ -1003,6 +1004,7 @@ void C_Object::MoveEnemy1(int iLastAnim)
 		pCloseTo = m_pParent->GetObject(x, y);
 		if ((pCloseTo->m_iObjNumber == OBJ_PLAYER) || (pCloseTo->m_iObjNumber == OBJ_SLIME)) {
 			m_pParent->ActionExplodeInto(m_iWorldPosX, m_iWorldPosY, m_iObjParam, ANIM_EXPLOSION_SHORT);
+			/**/return;
 		}
 	}
 

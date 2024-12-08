@@ -20,7 +20,7 @@
 #define DEFAULT_WINDOW_W 1024
 #define DEFAULT_WINDOW_H 768
 
-#define PROGRAM_TITLE ("Boulder v1.01")
+#define PROGRAM_TITLE ("Boulder v1.02")
 
 #ifdef WIN32
 #define ERROR_MSG(szMsg) \
