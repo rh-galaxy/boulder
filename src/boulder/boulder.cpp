@@ -313,7 +313,7 @@ void C_Game::LoadLastName()
 	FILE* pFile = fopen(szFile, "rt");
 	if (pFile) {
 		size_t iLen = fread(m_szPlayerName, 1, sizeof(m_szPlayerName) - 1, pFile);
-		m_szPlayerName[iLen + 1] = 0;
+		m_szPlayerName[iLen] = 0;
 		fclose(pFile);
 	}
 	if (m_szPlayerName[0] == 0) {
