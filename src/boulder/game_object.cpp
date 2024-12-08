@@ -136,6 +136,12 @@ C_Object::C_Object(C_TileHandler* pTileHandler, int iObjNumber, int iObjParam, i
 	SetAnim(m_iCurAnim);
 }
 
+C_Object::~C_Object()
+{
+	delete m_pPrevObj;
+	m_pPrevObj = NULL;
+}
+
 void C_Object::Draw(int iScreenX, int iScreenY, S_Rect* pstPartOfTile)
 {
 	m_pTileHandler->Draw(m_iObjNumber, m_iCurFrame, iScreenX, iScreenY, pstPartOfTile);
@@ -496,6 +502,7 @@ void C_Object::UpdateSlime()
 
 void C_Object::ReplaceByNext()
 {
+	C_Object* pToDelete = m_pNextObj;
 	m_iObjNumber = m_pNextObj->m_iObjNumber;
 	m_iObjProperties = m_pNextObj->m_iObjProperties;
 	m_iObjParam = m_pNextObj->m_iObjParam;
@@ -513,9 +520,11 @@ void C_Object::ReplaceByNext()
 	m_pstTileInfo = m_pNextObj->m_pstTileInfo;
 
 	m_bMoving = m_bFalling = false;
+	delete m_pPrevObj;
 	m_pPrevObj = m_pNextObj->m_pPrevObj; //NULL
 	m_pNextObj->m_pPrevObj = NULL;
 	m_pNextObj = m_pNextObj->m_pNextObj; //can have more next objects...
+	delete pToDelete;
 
 	SetAnim(m_iDefaultAnim); //back to default anim (0)
 }
@@ -629,6 +638,7 @@ int C_Object::Update(double dTime)
 			ReplaceByNext();
 			if (m_iObjNumber == OBJ_BOMB) { //replaced by a bomb, explode immediatly
 				m_pParent->ActionExplode3x3(m_iWorldPosX, m_iWorldPosY);
+				return 0;
 			}
 		}
 		else SetAnim(m_iDefaultAnim); //back to default anim (0)
@@ -658,13 +668,15 @@ int C_Object::Update(double dTime)
 					//stoped (hit something important?)
 					if (m_iObjNumber == OBJ_BOMB) { //explode bombs when stoped, no matter what they have hit (except OBJ_EMPTY)
 						m_pParent->ActionExplode3x3(m_iWorldPosX, m_iWorldPosY);
+						return 0;
 					}
 					else if ((iNeigbourDownProp & TYPE_HITABLE) != 0) {
 						//print("something hit by falling obj. ");
 						if (iNeigbourDownProp & TYPE_ENEMY) {
+							m_pParent->m_iScore += 25; //all enemies are worth 25 points
 							if (pObject->m_iObjParam == 0) m_pParent->ActionMoveAndDestroyBoth(m_iWorldPosX, m_iWorldPosY, m_iWorldPosX, m_iWorldPosY + 1, ANIM_MOVE_DOWN, ANIM_CURRENTANIMNORESET, ANIM_EXPLOSION_FIRE);
 							else m_pParent->ActionExplodeInto(m_iWorldPosX, m_iWorldPosY + 1, pObject->m_iObjParam, ANIM_EXPLOSION_SHORT);
-							m_pParent->m_iScore += 25; //all enemies are worth 25 points
+							return 0;
 						}
 						else pObject->Hit(this, true, ANIM_MOVE_DOWN);
 					}
@@ -872,8 +884,9 @@ int C_Object::Update(double dTime)
 			}
 			else { //player is commanded to die externaly (suicide or time is up)
 				if (!m_pParent->m_bFinished) {
-					m_pParent->ActionReplace(m_iWorldPosX, m_iWorldPosY, OBJ_EXPLOSION, ANIM_EXPLOSION_FIRE, -1);
 					PlaySoundVolPan(SOUND_EXPLOSION_FIRE, m_iWorldPosX, m_iWorldPosY);
+					m_pParent->ActionReplace(m_iWorldPosX, m_iWorldPosY, OBJ_EXPLOSION, ANIM_EXPLOSION_FIRE, -1);
+					return 0;
 				}
 			}
 		}
@@ -899,6 +912,8 @@ void C_Object::MoveEnemy(int iMove, int x, int y, int iMoveAnim)
 		m_pParent->ActionMoveAndDestroyBoth(m_iWorldPosX, m_iWorldPosY, x, y, iMoveAnim, ANIM_CURRENTANIMNORESET, ANIM_EXPLOSION_FIRE);
 	}
 	else if (iMove == 2) { //move and kill self
+		m_pParent->m_iScore += 25; //all enemies are worth 25 points
+
 		//not handled by by falling object hit, need to handle it here if the enemy wants to move into falling object
 		bool bBomb = m_pParent->GetObject(x, y)->m_iObjNumber == OBJ_BOMB;
 		if (!bBomb) {
@@ -906,8 +921,6 @@ void C_Object::MoveEnemy(int iMove, int x, int y, int iMoveAnim)
 			m_pParent->ActionExplodeInto(x, y, m_iObjParam, ANIM_EXPLOSION_SHORT);
 		}
 		else m_pParent->ActionExplode3x3(x, y); //need to explode the bomb before moving
-		
-		m_pParent->m_iScore += 25; //all enemies are worth 25 points
 	}
 }
 

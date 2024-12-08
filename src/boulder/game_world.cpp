@@ -495,6 +495,8 @@ void C_World::ActionMove(int x, int y, int x2, int y2, int iAnim, int iAnimForPr
 	if (iAnimForPrevObject != -1) {
 		oObj->m_pPrevObj = oPrevObj;
 		if (iAnimForPrevObject != ANIM_CURRENTANIMNORESET) oPrevObj->SetAnim(iAnimForPrevObject);
+	} else {
+		delete oPrevObj;
 	}
 }
 
@@ -513,6 +515,8 @@ void C_World::ActionReplace(int x, int y, int iNewObjNum, int iNewAnim, int iAni
 	if (iAnimForPrevObject != -1) {
 		oObj->m_pPrevObj = oPrevObj;
 		if (iAnimForPrevObject != ANIM_CURRENTANIMNORESET) oPrevObj->SetAnim(iAnimForPrevObject);
+	} else {
+		delete oPrevObj;
 	}
 }
 
@@ -529,6 +533,8 @@ void C_World::ActionMoveAndDestroyBoth(int x, int y, int x2, int y2, int iAnim, 
 	if (iAnimForPrevObject != -1) {
 		oObj->m_pPrevObj = oPrevObj; //replace any existing prevobject
 		if (iAnimForPrevObject != ANIM_CURRENTANIMNORESET) oPrevObj->SetAnim(iAnimForPrevObject);
+	} else {
+		delete oPrevObj;
 	}
 
 	C_Object::PlaySoundVolPan(iExplosionAnim == ANIM_EXPLOSION_SNAP ? SOUND_EXPLOSION_SNAP : SOUND_EXPLOSION_FIRE, x2, y2);
@@ -560,6 +566,7 @@ void C_World::ActionExplode3x3(int x, int y)
 				}
 				if (oObj->m_iObjNumber != OBJ_EXPLOSION) {
 					C_Object* oObjExplosion = new C_Object(m_pTileHandler, OBJ_EXPLOSION, OBJ_EMPTY, 0);
+					//delete oObjExplosion->m_pNextObj; //hack since we want to set next obj here
 					if (oObj->m_pNextObj != NULL) {
 						oObjExplosion->m_pNextObj = oObj->m_pNextObj;
 					}

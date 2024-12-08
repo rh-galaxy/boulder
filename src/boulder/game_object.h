@@ -20,6 +20,7 @@ class C_World;
 class C_Object
 {
 public:
+	~C_Object();
 	C_Object(C_TileHandler* pTileHandler, int iObjNumber, int iObjParam, int iObjParam2); //param2 only used for OBJ_EXPLOSION
 
 	static C_Control* s_pControl;
