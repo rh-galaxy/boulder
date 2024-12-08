@@ -29,7 +29,6 @@
 #define SAMPLE_RATE        44100
 #define MIXER_SCALE        0.5f
 #define OGG_FIFO_LOW       8000   //stereo 44100 -> 91ms (8000 samples)
-#define OGG_ALLOC          (300*1024)
 #include "pa_ringbuffer.h"
 
 struct S_LoadedSound
@@ -62,7 +61,6 @@ struct S_Channel
 	//ogg stream
 	stb_vorbis *pVStream;
 	bool bEndReached;
-	stb_vorbis_alloc stVAlloc; //to defeat memory leak in stb_vorbis.c
 
 	//ring buffer (FIFO) towards audio callback
 	PaUtilRingBuffer rBufToRT;

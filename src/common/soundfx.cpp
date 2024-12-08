@@ -190,8 +190,6 @@ void C_Sound::Setup()
 	for (int i = 0; i < MAX_CHANNELS; i++) {
 		m_pChannels[i].bPlaying = false;
 		m_pChannels[i].pVStream = NULL;
-		m_pChannels[i].stVAlloc.alloc_buffer = NULL;
-		m_pChannels[i].stVAlloc.alloc_buffer_length_in_bytes = 0;
 	}
 	s_pTheSound = this;
 	m_pFile = NULL;
@@ -215,8 +213,6 @@ void C_Sound::Free()
 		}
 		m_pChannels[i].pVStream = NULL;
 		m_pChannels[i].bPlaying = false;
-		delete[] m_pChannels[i].stVAlloc.alloc_buffer;
-		m_pChannels[i].stVAlloc.alloc_buffer = NULL;
 	}
 
 	if (m_pFile) {
@@ -333,8 +329,6 @@ void* C_Sound::Play(int iIndex, float fVolume, float fPanning, bool bLooping, in
 			if (m_pChannels[i].pVStream) {
 				stb_vorbis_close(m_pChannels[i].pVStream);
 				m_pChannels[i].pVStream = NULL;
-				delete[] m_pChannels[i].stVAlloc.alloc_buffer;
-				m_pChannels[i].stVAlloc.alloc_buffer = NULL;
 			}
 
 			m_pChannels[i].iOutPos = 0;
@@ -345,12 +339,8 @@ void* C_Sound::Play(int iIndex, float fVolume, float fPanning, bool bLooping, in
 			if (m_pSounds[iIndex].iType == 1) {
 				//sound data is ogg
 				int iUsed, iError;
-				//memory leak 512+64 bytes, despite using stb_vorbis_close() later, defeated here
-				//by providing a buffer of 300K
-				m_pChannels[i].stVAlloc.alloc_buffer = new char[OGG_ALLOC];
-				m_pChannels[i].stVAlloc.alloc_buffer_length_in_bytes = OGG_ALLOC;
 				m_pChannels[i].pVStream = stb_vorbis_open_pushdata(m_pSounds[iIndex].pOggData,
-					m_pSounds[iIndex].iLength, &iUsed, &iError, &m_pChannels[i].stVAlloc); //passing NULL as the last param leaks memory
+					m_pSounds[iIndex].iLength, &iUsed, &iError, NULL);
 				m_pChannels[i].iInPos = iUsed;
 				m_pChannels[i].bEndReached = false;
 
