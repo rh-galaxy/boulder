@@ -210,6 +210,7 @@ void C_Editor::FreeAll()
 	delete m_pFont;  m_pFont = NULL;
 	delete m_pGraph; m_pGraph = NULL;
 	delete m_pDlg1;  m_pDlg1 = NULL;
+	delete m_pBKImg; m_pBKImg = NULL;
 }
 
 bool C_Editor::Open(const char* szFilename)
@@ -931,6 +932,7 @@ int main(int argc, char* argv[])
 out:
 	delete g_pEditor;
 	delete g_pControl;
+	delete g_pAccTimer;
 #ifdef WIN32
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();
