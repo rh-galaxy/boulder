@@ -13,7 +13,6 @@ SDL_Renderer* C_GraphWrapper::m_pRenderer = NULL;
 C_GraphWrapper::C_GraphWrapper() : m_pWindow(NULL)
 {
 	m_bFullScreen = false;
-	m_szErrorMsg[0] = 0;
 
 	s_pTheGraph = this;
 
@@ -98,7 +97,6 @@ bool C_GraphWrapper::SetMode(int iWidth, int iHeight, bool bFullScreen, bool bRe
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		sprintf(m_szErrorMsg, "Unable to initialize SDL");
 		return false;
 	}
 
@@ -107,7 +105,6 @@ bool C_GraphWrapper::SetMode(int iWidth, int iHeight, bool bFullScreen, bool bRe
 	if (!(m_pWindow = SDL_CreateWindow("SDL UNTITLED", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 		m_iWidth, m_iHeight, (bResize ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_SHOWN)))
 	{
-		sprintf(m_szErrorMsg, "Unable to create SDL window");
 		return false;
 	}
 
@@ -115,11 +112,10 @@ bool C_GraphWrapper::SetMode(int iWidth, int iHeight, bool bFullScreen, bool bRe
 
 	m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	//checking for SDL initialization error
-	/*const char* sdl_error = SDL_GetError();
-	if (*sdl_error != '\0') {
-		sprintf(m_szErrorMsg, "SDL Error: %s", sdl_error);
-		return false;
-	}*/ //on linux we get "That operation is not supported" - but it still works
+	//const char* sdl_error = SDL_GetError();
+	//if (*sdl_error != '\0') {
+	//	return false;
+	//} //on linux we get "That operation is not supported" - but it still works
 
 	C_Image::SetDefaultFormat(_RGBA8888); //make the image class operate with RGBA as in SDL
 
@@ -219,7 +215,7 @@ SDL_Texture* C_GraphWrapper::LoadTexture(C_Image* pSrcImg)
 		{
 			//const char *sdl_error = SDL_GetError();
 			//if(*sdl_error != '\0')
-			//	sprintf(m_szErrorMsg, "%d %d SDL Error: %s", iWidth, iHeight, sdl_error);
+			//	printf("%d %d SDL Error: %s", iWidth, iHeight, sdl_error);
 		}
 	}
 

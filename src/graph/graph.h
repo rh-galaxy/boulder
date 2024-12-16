@@ -26,8 +26,6 @@ public:
 	C_GraphWrapper();
 	~C_GraphWrapper();
 
-	const char* GetErrorMsg() { return m_szErrorMsg; };
-
 	//init
 	void SetWindowTitle(const char* szWndTitle);
 	bool SetMode(int iWidth, int iHeight, bool bFullScreen = false, bool bResize = false);
@@ -79,7 +77,6 @@ private:
 	//info and state var
 	int  m_iWidth, m_iHeight, m_iPixelFmt; //see image.h
 	bool m_bFullScreen;
-	char m_szErrorMsg[256];
 
 	//private helpers
 	bool KillWindow();
