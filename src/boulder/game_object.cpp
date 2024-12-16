@@ -930,7 +930,6 @@ void C_Object::MoveEnemy(int iMove, int x, int y, int iMoveAnim)
 void C_Object::MoveEnemy0(int iLastAnim)
 {
 	int aiOrder[4][4] = { {2, 1, 0, 3}, {3, 2, 1, 0}, {1, 0, 3, 2}, {0, 3, 2, 1} };
-	int aiAnimTurnCW[] = { ANIM_TURN_RIGHT_CW, ANIM_TURN_DOWN_CW, ANIM_TURN_LEFT_CW, ANIM_TURN_UP_CW };
 	int i, x, y, iIndex, iLastWasTurn = 0;
 	C_Object* pCloseTo;
 

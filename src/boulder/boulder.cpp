@@ -717,10 +717,6 @@ int __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 int main(int argc, char* argv[])
 #endif
 {
-	bool bShowDialog = false;
-	char szOpenName[1024];
-	szOpenName[0] = 0;
-
 	C_Global::Init("gui_desc0.txt", "Boulder");
 
 	g_pGame = new C_Game();

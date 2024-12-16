@@ -267,8 +267,8 @@ bool C_GraphWrapper::Blt(SDL_Texture* hTexture, int iW, int iH, int iX, int iY, 
 	if (iWidth <= 0 || iHeight <= 0)
 		return false; //texture size not supported
 
-	float maxh = (float)iH / iHeight;
-	float maxw = (float)iW / iWidth;
+	//float maxh = (float)iH / iHeight;
+	//float maxw = (float)iW / iWidth;
 
 	if (bTransparent) SDL_SetTextureBlendMode(hTexture, SDL_BLENDMODE_BLEND);
 	else SDL_SetTextureBlendMode(hTexture, SDL_BLENDMODE_NONE);
@@ -299,7 +299,6 @@ bool C_GraphWrapper::Blt(SDL_Texture* hTexture, int iW, int iH, S_Rect* pSrcRect
 		return Blt(hTexture, iW, iH, iX, iY, bTransparent);
 
 	int iWidth, iHeight;
-	uint8_t alpha = 0;
 
 	if (SDL_QueryTexture(hTexture, NULL, NULL, &iWidth, &iHeight) < 0)
 	{
@@ -337,7 +336,6 @@ bool C_GraphWrapper::Blt(SDL_Texture* hTexture, int iW, int iH, S_Rect* pSrcRect
 		return false;
 
 	int iWidth, iHeight;
-	uint8_t alpha = 0;
 
 	if (SDL_QueryTexture(hTexture, NULL, NULL, &iWidth, &iHeight) < 0)
 	{

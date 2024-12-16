@@ -380,7 +380,6 @@ bool C_Sound::Load(const char *szFilename, const char *szResname, int iIndex)
 	S_WaveHdr stHDR;
 	S_LoadedSound *pSnd = &m_pSounds[iIndex];
 
-	bool bResult = false;
 	if (iIndex >= MAX_INDEX) return false;
 
 	//unload previouse file (if any)
