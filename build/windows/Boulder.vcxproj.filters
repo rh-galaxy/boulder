@@ -125,9 +125,6 @@
     <ClInclude Include="..\..\src\common\common.h">
       <Filter>Source Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\common\debugmem.h">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\common\fileresource.h">
       <Filter>Source Files\common</Filter>
     </ClInclude>

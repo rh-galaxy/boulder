@@ -50,7 +50,6 @@
     <ClInclude Include="..\..\src\boulder\game_world.h" />
     <ClInclude Include="..\..\src\boulder\hiscorelist.h" />
     <ClInclude Include="..\..\src\common\common.h" />
-    <ClInclude Include="..\..\src\common\debugmem.h" />
     <ClInclude Include="..\..\src\common\fileresource.h" />
     <ClInclude Include="..\..\src\common\global.h" />
     <ClInclude Include="..\..\src\common\gui.h" />
